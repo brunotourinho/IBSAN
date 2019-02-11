@@ -14,11 +14,47 @@
                         {
                             <option value="@m.Codigo">@m.Nome</option>
                         }
-                    </select>                   
+                    </select>
                 </div>
                 <div class="ui error message"></div>
                 <input type="submit" class="ui tiny button" value="Pesquisar" />
             </form>
+            @if(Model.MunicipiosInfo.Count > 0)
+            {
+
+            <table class="ui very compact table">
+                <thead>
+                    <tr>
+                        <th>Código IBGE</th>
+                        <th>Código Nome</th>
+                        <th>UF</th>
+                        <th>Nome Serviço</th>
+                        <th>Sigla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var m in Model.MunicipiosInfo)
+                    {
+                    <tr>
+                        <th>@m.Codigo</th>
+                        <th>@m.Nome</th>
+                        <th>@m.UF</th>
+                        <th>@m.NomePrestador</th>
+                        <th>@m.Sigla</th>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $('.ui.form').form({
+            fields: {
+                MunicipiosSelecionados: { identifier: 'MunicipiosSelecionados', rules: [{ type: 'greaterThan[0]', prompt: 'Selecione pelo menos um  Município' }] },
+            }
+        });
+    </script>
+}
