@@ -1,0 +1,158 @@
+﻿@using IBSANBR.Extensions
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBSANBR</title>
+    <link rel="stylesheet" href="~/lib/semantic-ui/semantic.min.css" />
+    <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+    <link rel="stylesheet" href="~/lib/noty/lib/noty.css" />
+    <link rel="stylesheet" href="~/lib/noty/lib/themes/semanticui.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
+</head>
+<body style="overflow-x: scroll !important;">
+
+    @RenderBody()
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/semantic-ui/semantic.min.js"></script>
+    <script src="~/lib/jquery.inputmask/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/lib/noty/lib/noty.min.js"></script>
+    <script src="~/js/semantic-column-toggle.js"></script>
+    <script src="~/js/semantic-dialog.js"></script>
+    <script src="~/js/semantic-noty.js"></script>
+    <script>
+        $(".custom").popup({ lastResort: 'bottom left', on: 'click' });
+        $('.tt').popup({ variation: 'mini inverted', position: 'top center' });
+        $('.dropdown').dropdown();
+        $('.search.selection.dropdown').dropdown({
+            ignoreDiacritics: true,
+            sortSelect: true,
+            fullTextSearch: 'exact'
+        });
+        $('.checkbox').checkbox();
+        $('.accordion').accordion();
+        //-> Máscaras
+        $('.currency').inputmask("currency", { prefix: "R$ ", radixPoint: ',', groupSeparator: "." });
+        $('.percentage').inputmask("decimal", { prefix: "", suffix: "%", digits: 2, radixPoint: ',', groupSeparator: ".", rightAlign: false });
+        $(".integer").inputmask("integer");
+        $('.phone').inputmask({ mask: ['(99) 9999-9999', '(99) 99999-9999'], placeholder: " ", showMaskOnHover: false, showMaskOnFocus: false });
+        $(".decimal").inputmask("decimal", { radixPoint: ",", digits: 2 });
+        $('.date').inputmask({ mask: ['99/99/9999'], placeholder: " ", showMaskOnHover: false, showMaskOnFocus: false });
+        $('.carteira').inputmask({ mask: '0 999.9999.999999.99-9', placeholder: " ", showMaskOnHover: false, showMaskOnFocus: false });
+        $(".mesano").inputmask({ mask: '99/9999', placeholder: " ", showMaskOnHover: false, showMaskOnFocus: false });
+        //-> Calendário
+        $('.calendar-date-time').calendar({
+            type: 'datetime',
+            ampm: false,
+            today: true,
+            text: {
+                days: ["D", "S", "T", "Q", "Q", "S", "S"],
+                months: [
+                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro",
+                    "Novembro", "Dezembro"
+                ],
+                monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                today: "Hoje",
+                now: "Agora",
+                am: "AM",
+                pm: "PM"
+            },
+            formatter: {
+                datetime: function (date, t) {
+                    if (!date) return '';
+                    var day = date.getDate() + '';
+                    if (day.length < 2) {
+                        day = '0' + day;
+                    }
+                    var month = date.getMonth() + 1 + '';
+                    if (month.length < 2) {
+                        month = '0' + month;
+                    }
+                    var year = date.getFullYear();
+
+                    var hours = date.getHours() + '';
+                    if (hours.length < 2) {
+                        hours = '0' + hours;
+                    }
+                    var minutes = date.getMinutes() + '';
+                    if (minutes.length < 2) {
+                        minutes = '0' + minutes;
+                    }
+                    return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+                }
+            }
+        });
+        $('.calendar-date').calendar({
+            type: 'date',
+            today: true,
+            text: {
+                days: ["D", "S", "T", "Q", "Q", "S", "S"],
+                months: [
+                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro",
+                    "Novembro", "Dezembro"
+                ],
+                monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                today: "Hoje",
+                now: "Agora",
+                am: "AM",
+                pm: "PM"
+            },
+            formatter: {
+                date: function (date) {
+                    if (!date) return '';
+                    var day = date.getDate() + '';
+                    if (day.length < 2) {
+                        day = '0' + day;
+                    }
+                    var month = (date.getMonth() + 1) + '';
+                    if (month.length < 2) {
+                        month = '0' + month;
+                    }
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            }
+        });
+        //-> Regras de Formulário
+        $.fn.form.settings.rules.greaterThan = function (inputValue, validationValue) { return inputValue > validationValue; };
+        $.fn.form.settings.rules.fileTypes = function (text, types) {
+            var fileTypes = types.split(','); // you're separating the string by commas
+            var filesArray = text.split(';');
+            var isContains = true;
+            var fileTypeRegex = '';
+            for (var t = 0; t < fileTypes.length; t++) {
+                if (t === 0) {
+                    fileTypeRegex = '.*\.' + fileTypes[t] + '$';
+                }
+                else {
+                    fileTypeRegex += '|.*\.' + fileTypes[t] + '$';
+                }
+            }
+            var regExp = new RegExp("^(.(?!" + fileTypeRegex + "))*$", 'gi');
+            window.$.each(filesArray, function (i, e) {
+                var arq = window.$.trim(e);
+                if (regExp.test(arq)) {
+                    isContains = regExp.test(arq);
+                    return false;
+                }
+                return false;
+            });
+            return isContains;
+        };
+    </script>
+    @{
+        if (TempData["Message"] != null)
+        {
+            var message = TempData.Get<SystemMessage>("Message");
+            var icon = message.Type == SystemMessage.MessageType.Success ? "checkmark" : "remove";
+            <script>
+            showNoty('@message.Type.ToLower()', '@message.Title', '@message.Text', '@icon')
+            </script>
+        }
+    }
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

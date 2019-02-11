@@ -1,0 +1,24 @@
+﻿@page
+@model IndexModel
+<partial name="_Header" />
+<div style="background-color:#f2f2f2;min-height:100%; margin: 16px 0 0 0;">
+    <div class="ui grid container">
+        <div class="column">
+            <h2>Pesquisa</h2>
+            <form method="post" class="ui form tiny principal-form">
+
+                <div class="six wide field">
+                    <label>Municípios</label>
+                    <select asp-for="MunicipiosSelecionados" class="ui search selection multiple dropdown">
+                        @foreach (var m in Model.Municipios)
+                        {
+                            <option value="@m.Codigo">@m.Nome</option>
+                        }
+                    </select>                   
+                </div>
+                <div class="ui error message"></div>
+                <input type="submit" class="ui tiny button" value="Pesquisar" />
+            </form>
+        </div>
+    </div>
+</div>
