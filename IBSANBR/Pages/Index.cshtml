@@ -1,4 +1,5 @@
 ﻿@page
+@using Newtonsoft.Json;
 @model IndexModel
 <partial name="_Header" />
 <div style="background-color:#f2f2f2;min-height:100%; margin: 16px 0 0 0;">
@@ -19,42 +20,89 @@
                 <div class="ui error message"></div>
                 <input type="submit" class="ui tiny button" value="Pesquisar" />
             </form>
-            @if(Model.MunicipiosInfo.Count > 0)
+            @if (Model.MunicipiosInfo.Count > 0)
             {
 
-            <table class="ui very compact table">
-                <thead>
-                    <tr>
-                        <th>Código IBGE</th>
-                        <th>Código Nome</th>
-                        <th>UF</th>
-                        <th>Nome Serviço</th>
-                        <th>Sigla</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var m in Model.MunicipiosInfo)
-                    {
-                    <tr>
-                        <td>@m.Codigo</td>
-                        <td>@m.Nome</td>
-                        <td>@m.UF</td>
-                        <td>@m.NomePrestador</td>
-                        <td>@m.Sigla</td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+                <table class="ui very compact table">
+                    <thead>
+                        <tr>
+                            <th>Código IBGE</th>
+                            <th>Código Nome</th>
+                            <th>UF</th>
+                            <th>Nome Serviço</th>
+                            <th>Sigla</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model.MunicipiosInfo)
+                        {
+                            <tr>
+                                <td>@m.Codigo</td>
+                                <td>@m.Nome</td>
+                                <td>@m.UF</td>
+                                <td>@m.NomePrestador</td>
+                                <td>@m.Sigla</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
+            <div id="chartContainer"  class="ui blue segment">
+
+            </div>
         </div>
     </div>
 </div>
 @section scripts {
     <script>
+
+        var result = @Html.Raw(@JsonConvert.SerializeObject(Model.PopulacaoCoberturaInfo))
+
         $('.ui.form').form({
             fields: {
                 MunicipiosSelecionados: { identifier: 'MunicipiosSelecionados', rules: [{ type: 'greaterThan[0]', prompt: 'Selecione pelo menos um  Município' }] },
             }
         });
+
+        var cats = [];
+        var series = [];
+
+        $(result).each(function (index) {
+            series.push({
+                name: result[index].Nome,
+                data: [result[index].Populacao]
+
+            });
+        });
+
+        Highcharts.chart('chartContainer', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'População'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: ["Município"]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '??'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: series
+        });
+
+
     </script>
 }

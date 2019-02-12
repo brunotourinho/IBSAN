@@ -29,5 +29,14 @@ namespace IBSANBR.Repositories
                 return result.ToList();
             }
         }
+
+        public async Task<List<PopulacaoCobertura>> PopulacaoCobertura()
+        {
+            using (IDbConnection db = Connection)
+            {
+                var result = await db.QueryAsync<PopulacaoCobertura>(@"SET SQL_BIG_SELECTS=1; SELECT DISTINCT Municipios.Codigo, Municipios.Nome, Municipios.Populacao, IOAgua.IN001 FROM Municipios LEFT JOIN IOAgua on Municipios.Codigo = IOAgua.CodigoMunicipio");
+                return result.ToList();
+            }            
+        }
     }
 }
