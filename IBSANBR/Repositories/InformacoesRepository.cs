@@ -34,10 +34,9 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<PopulacaoCobertura>(@"SET SQL_BIG_SELECTS=1; SELECT Prestadores.Competencia, Prestadores.Prestador, Municipios.GE12A, Municipios.GE06A ,Informacoes.AG001, Informacoes.ES026 FROM Prestadores 
-                INNER JOIN Municipios on Prestadores.CodigoMunicipio = Municipios.CodigoMunicipio AND Prestadores.Competencia = Municipios.Competencia
-                INNER JOIN Informacoes on Prestadores.CodigoMunicipio = Informacoes.CodigoMunicipio AND Prestadores.Competencia = Informacoes.Competencia
-                WHERE Prestadores.CodigoMunicipio = ?CodigoMunicipio AND Prestadores.Competencia in (2010,2011,2012,2013,2014,2015,2016) ORDER BY Prestadores.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                var result = await db.QueryAsync<PopulacaoCobertura>(
+                    @"SET SQL_BIG_SELECTS=1; SELECT Municipios.Competencia, Municipios.GE12A, SUM(Informacoes.AG001) AS AG001, SUM(Informacoes.ES001) AS ES001 FROM Municipios INNER JOIN Informacoes on Municipios.CodigoMunicipio = Informacoes.CodigoMunicipio AND Municipios.Competencia = Informacoes.Competencia WHERE Municipios.CodigoMunicipio = ?CodigoMunicipio AND Municipios.Competencia in (2010,2011,2012,2013,2014,2015,2016) GROUP BY Municipios.Competencia, Municipios.GE12A ORDER BY Municipios.Competencia",
+                    new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }            
         }

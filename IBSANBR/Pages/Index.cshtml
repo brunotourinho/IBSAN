@@ -14,7 +14,7 @@
                             <option value="">Selecione</option>
                             @foreach (var m in Model.Municipios)
                             {
-                                <option value="@m.CodigoMunicipio">@m.Nome-@m.UF</option>
+                            <option value="@m.CodigoMunicipio">@m.Nome-@m.UF</option>
                             }
                         </select>
                     </div>
@@ -27,12 +27,11 @@
             <div class="ui column">
                 @if (Model.PopulacaoCobertura != null)
                 {
-                    <div id="chartContainer" class="ui blue segment"></div>
+                <div id="chartContainer" class="ui blue segment"></div>
                 }
             </div>
             <div class="ui column"></div>
         </div>
-    </div>
     </div>
 </div>
 @section scripts {
@@ -49,16 +48,18 @@
         var cats = [];
         var populacao = [];
         var atendimentoTotal = [];
-        var atendimentoUrbano = [];
+        var atendimentoEsgoto = [];
 
         populacao.name = 'População'
         populacao.data = []
 
         atendimentoTotal.name = 'Atendimento Total'
         atendimentoTotal.data = []
+        atendimentoTotal.yAxis = 1,
 
-        atendimentoUrbano.name = 'Atendimento Urbano'
-        atendimentoUrbano.data = []
+        atendimentoEsgoto.name = 'Atendimento Esgoto'
+        atendimentoEsgoto.data = []
+        atendimentoEsgoto.yAxis = 1,
 
         $(result).each(function (index) {
             cats.push(result[index].Competencia);
@@ -68,44 +69,52 @@
             atendimentoTotal.data.push(
                ((result[index].AG001 / result[index].GE12A) * 100)
             );
-            atendimentoUrbano.data.push(
-                ((result[index].ES026 / result[index].GE06A) * 100)
+            atendimentoEsgoto.data.push(
+                ((result[index].ES001 / result[index].GE12A) * 100)
             );
         });
 
-        Highcharts.chart('chartContainer', {
-            chart: {
-                type: 'line'
+    Highcharts.chart('chartContainer', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: cats
+        },
+        yAxis: [
+            {
+                title: { text: 'População na área de cobertura' }
             },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
-            },
-            xAxis: {
-                categories: cats
-            },
-            yAxis: {
-                title: {
-                    text: 'População na área de cobertura'
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return 'Ano: ' + this.x.toString() + ' ' + Highcharts.numberFormat(this.y, 2, ',', '.');
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    enableMouseTracking: true
-                }
-            },
-            series: [populacao, atendimentoTotal, atendimentoUrbano]
-        });
+            {
+                title: { text: 'Cobertura, %' },
+                opposite: true,
+                max: 100
+            }],
+        tooltip: {
+            formatter: function () {
+                return '' +
+                    this.x + ': ' + Highcharts.numberFormat(this.y, 2, ',', '.') +
+                    (this.series.name.indexOf('%') > 0 ? '%' : ''); //'Coverage with Water Service, %' ? '%' : '');
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: false
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [populacao, atendimentoTotal, atendimentoEsgoto]
+    });
+
+
 
 
     </script>
