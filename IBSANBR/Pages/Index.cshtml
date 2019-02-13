@@ -4,59 +4,41 @@
 <partial name="_Header" />
 <div style="background-color:#f2f2f2;min-height:100%; margin: 16px 0 0 0;">
     <div class="ui grid container">
-        <div class="column">
-            <h2>Pesquisa</h2>
-            <form method="post" class="ui form tiny principal-form">
-
-                <div class="six wide field">
-                    <label>Municípios</label>
-                    <select asp-for="MunicipiosSelecionados" class="ui search selection multiple dropdown">
-                        @foreach (var m in Model.Municipios)
-                        {
-                            <option value="@m.Codigo">@m.Nome</option>
-                        }
-                    </select>
-                </div>
-                <div class="ui error message"></div>
-                <input type="submit" class="ui tiny button" value="Pesquisar" />
-            </form>
-            @if (Model.MunicipiosInfo.Count > 0)
-            {
-
-                <table class="ui very compact table">
-                    <thead>
-                        <tr>
-                            <th>Código IBGE</th>
-                            <th>Código Nome</th>
-                            <th>UF</th>
-                            <th>Nome Serviço</th>
-                            <th>Sigla</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var m in Model.MunicipiosInfo)
-                        {
-                            <tr>
-                                <td>@m.Codigo</td>
-                                <td>@m.Nome</td>
-                                <td>@m.UF</td>
-                                <td>@m.NomePrestador</td>
-                                <td>@m.Sigla</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            <div id="chartContainer"  class="ui blue segment">
-
+        <div class="row">
+            <div class="column">
+                <h2>Pesquisa</h2>
+                <form method="post" class="ui form tiny principal-form">
+                    <div class="four wide field">
+                        <label>Municípios</label>
+                        <select asp-for="CodigoMunicipio" class="ui search selection dropdown">
+                            <option value="">Selecione</option>
+                            @foreach (var m in Model.Municipios)
+                            {
+                                <option value="@m.CodigoMunicipio">@m.Nome-@m.UF</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="ui error message"></div>
+                    <input type="submit" class="ui tiny button" value="Pesquisar" />
+                </form>
             </div>
         </div>
+        <div class="ui two column row">
+            <div class="ui column">
+                @if (Model.PopulacaoCobertura != null)
+                {
+                    <div id="chartContainer" class="ui blue segment"></div>
+                }
+            </div>
+            <div class="ui column"></div>
+        </div>
+    </div>
     </div>
 </div>
 @section scripts {
     <script>
 
-        var result = @Html.Raw(@JsonConvert.SerializeObject(Model.PopulacaoCoberturaInfo))
+        var result = @Html.Raw(@JsonConvert.SerializeObject(Model.PopulacaoCobertura))
 
         $('.ui.form').form({
             fields: {
@@ -65,42 +47,64 @@
         });
 
         var cats = [];
-        var series = [];
+        var populacao = [];
+        var atendimentoTotal = [];
+        var atendimentoUrbano = [];
+
+        populacao.name = 'População'
+        populacao.data = []
+
+        atendimentoTotal.name = 'Atendimento Total'
+        atendimentoTotal.data = []
+
+        atendimentoUrbano.name = 'Atendimento Urbano'
+        atendimentoUrbano.data = []
 
         $(result).each(function (index) {
-            series.push({
-                name: result[index].Nome,
-                data: [result[index].Populacao]
+            cats.push(result[index].Competencia);
 
-            });
+            populacao.data.push(result[index].GE12A);
+
+            atendimentoTotal.data.push(
+               ((result[index].AG001 / result[index].GE12A) * 100)
+            );
+            atendimentoUrbano.data.push(
+                ((result[index].ES026 / result[index].GE06A) * 100)
+            );
         });
 
         Highcharts.chart('chartContainer', {
             chart: {
-                type: 'column'
+                type: 'line'
             },
             title: {
-                text: 'População'
+                text: ''
             },
             subtitle: {
                 text: ''
             },
             xAxis: {
-                categories: ["Município"]
+                categories: cats
             },
             yAxis: {
-                min: 0,
                 title: {
-                    text: '??'
+                    text: 'População na área de cobertura'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return 'Ano: ' + this.x.toString() + ' ' + Highcharts.numberFormat(this.y, 2, ',', '.');
                 }
             },
             plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    enableMouseTracking: true
                 }
             },
-            series: series
+            series: [populacao, atendimentoTotal, atendimentoUrbano]
         });
 
 
