@@ -41,5 +41,14 @@ namespace IBSANBR.Repositories
                 return result.ToList();
             }            
         }
+
+        public async Task<List<ReceitaCustoOperacao>> ReceitaCustoOperacao(string codigoMunicipio)
+        {
+            using (IDbConnection db = Connection)
+            {
+                var result = await db.QueryAsync<ReceitaCustoOperacao>(@"SET SQL_BIG_SELECTS=1; SELECT Municipios.Competencia, Informacoes.FN001, Informacoes.FN017  FROM Municipios INNER JOIN Informacoes ON Municipios.CodigoMunicipio = Informacoes.CodigoMunicipio AND Municipios.Competencia = Informacoes.Competencia WHERE Municipios.CodigoMunicipio = ?CodigoMunicipio AND Municipios.Competencia in (2010,2011,2012,2013,2014,2015,2016) GROUP BY Municipios.Competencia ORDER BY Municipios.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                return result.ToList();
+            }
+        }
     }
 }

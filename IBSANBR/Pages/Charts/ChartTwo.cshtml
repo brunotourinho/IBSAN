@@ -1,0 +1,131 @@
+﻿@page
+@using Newtonsoft.Json;
+@model IBSANBR.Pages.Charts.ChartTwoModel
+<partial name="_Header" />
+<div style="background-color:#f2f2f2;min-height:100%; margin: 16px 0 0 0;">
+    <div class="ui grid container">
+        <div class="row">
+            <div class="column">
+                <h2>Pesquisa</h2>
+                <form method="post" class="ui form tiny principal-form">
+                    <div class="four wide field">
+                        <label>Municípios</label>
+                        <select asp-for="CodigoMunicipio" class="ui search selection dropdown">
+                            <option value="">Selecione</option>
+                            @foreach (var m in Model.Municipios)
+                            {
+                                <option value="@m.CodigoMunicipio">@m.Nome-@m.UF</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="ui error message"></div>
+                    <input type="submit" class="ui tiny button" value="Pesquisar" />
+                </form>
+            </div>
+        </div>
+        <div class="ui two column row">
+            <div class="ui column">
+                @if (Model.ReceitaCustoOperacao != null)
+                {
+                    <div id="chartContainer" class="ui blue segment"></div>
+                }
+            </div>
+            <div class="ui column"></div>
+        </div>
+    </div>
+</div>
+</div>
+@section scripts {
+    <script>
+
+        var result = @Html.Raw(@JsonConvert.SerializeObject(Model.ReceitaCustoOperacao))
+
+        $('.ui.form').form({
+            fields: {
+                MunicipiosSelecionados: { identifier: 'MunicipiosSelecionados', rules: [{ type: 'greaterThan[0]', prompt: 'Selecione pelo menos um  Município' }] },
+            }
+        });
+
+        var cats = [];
+
+        var receitaTotal = [];
+        var despesaTotal = [];
+        var desempenho = [];
+
+
+        desempenho.name = 'Desempenho';
+        desempenho.data = [];
+        desempenho.yAxis = 1;
+
+        receitaTotal.name = 'Receita Total'
+        receitaTotal.data = []
+        receitaTotal.type = 'column';
+
+        despesaTotal.name = 'Despesa Total'
+        despesaTotal.data = []
+        despesaTotal.type = 'column';
+
+        $(result).each(function (index) {
+            cats.push(result[index].Competencia);
+
+            receitaTotal.data.push(result[index].FN001);
+            despesaTotal.data.push(result[index].FN017);
+            desempenho.data.push(
+                ((result[index].FN001 / result[index].FN017) * 100)
+            );
+        });
+
+        Highcharts.chart('chartContainer', {
+
+            chart: {
+                defaultSeriesType: 'line'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: cats
+            },
+            yAxis: [{
+                title: {
+                    text: 'Receita e Custos, R$',
+                }
+            }, {
+                title: {
+                    text: 'Operações',
+                    style: {
+                        color: '#4572A7'
+                    }
+                },
+                labels: {
+                    formatter: function () {
+                        return Highcharts.numberFormat(this.value) + '';
+                    },
+                    style: {
+                        color: '#4572A7'
+                    }
+                },
+                opposite: true
+                }],
+            tooltip: {
+                formatter: function () {
+                    return '' + this.x + ': ' + (this.series.name == 'Desempenho' ? '' : 'R$ ') + Highcharts.numberFormat(this.y);
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [receitaTotal, despesaTotal, desempenho]
+        });
+
+
+    </script>
+}
