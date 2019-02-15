@@ -25,6 +25,12 @@ namespace IBSANBR
         [BindProperty]
         public Custos Custos { get; set; }
 
+        [BindProperty]
+        public List<ConsumoProducao> ConsumoProducao { get; set; }
+
+        [BindProperty]
+        public List<Estatisticas> Estatisticas { get; set; }
+
 
         public IndexModel(InformacoesRepository infoRepository)
         {
@@ -43,6 +49,8 @@ namespace IBSANBR
             PopulacaoCobertura = await _infoRepository.PopulacaoCobertura(CodigoMunicipio);
             ReceitaCustoOperacao = await _infoRepository.ReceitaCustoOperacao(CodigoMunicipio);
             Custos = await _infoRepository.Custos(CodigoMunicipio);
+            ConsumoProducao = await _infoRepository.ConsumoProducao(CodigoMunicipio);
+            Estatisticas = await _infoRepository.Estatisticas(CodigoMunicipio);
             return Page();
         }
     }

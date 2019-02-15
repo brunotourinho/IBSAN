@@ -27,6 +27,65 @@
                 </form>
             </div>
         </div>
+        @if (Model.Estatisticas != null)
+        {
+            <div class="row">
+                <div class="column">
+                    <h4>Estatísticas - @Model.Estatisticas.FirstOrDefault().Prestador - @Model.Estatisticas.FirstOrDefault().Competencia</h4>
+                    <div class="ui blue center aligned segment">
+                        <div class="ui mini stackable statistics" style="justify-content: center;">
+                            <div class="ui statistic">
+                                <div class="value">
+                                    @Model.Estatisticas.FirstOrDefault().AG003
+                                </div>
+                                <div class="label">
+                                    Número de Economias Ativas<br />Água
+                                </div>
+                            </div>
+                            <div class="ui small statistic">
+                                <div class="value">
+                                    @Model.Estatisticas.FirstOrDefault().ES003
+                                </div>
+                                <div class="label">
+                                    Número de Economias Ativas<br />Esgoto
+                                </div>
+                            </div>
+                            <div class="ui small statistic">
+                                <div class="value">
+                                    @Model.Estatisticas.FirstOrDefault().AG005
+                                </div>
+                                <div class="label">
+                                    Extensão da Rede<br />Água
+                                </div>
+                            </div>
+                            <div class="ui small statistic">
+                                <div class="value">
+                                    @Model.Estatisticas.FirstOrDefault().ES004
+                                </div>
+                                <div class="label">
+                                    Extensão da Rede<br />Esgoto
+                                </div>
+                            </div>
+                            <div class="ui small statistic">
+                                <div class="value">
+                                    @{
+                                        decimal consumoResidencial = 0;
+                                        if (Model.Estatisticas.FirstOrDefault().AG013 > 0 && Model.Estatisticas.FirstOrDefault().AG013 > 0)
+                                        {
+                                            consumoResidencial = (Model.Estatisticas.FirstOrDefault().AG013 / Model.Estatisticas.FirstOrDefault().AG013) * 100;
+                                        }
+                                    }
+                                    @consumoResidencial
+                                </div>
+                                <div class="label">
+                                    Consumo Residencial
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
         <div class="ui two column row">
             @if (Model.PopulacaoCobertura != null)
             {
@@ -51,7 +110,13 @@
 
             }
             <div class="ui column">
+                @if (Model.ConsumoProducao != null)
+                {
+                    <div class="ui column">
+                        <div id="chartFourContainer" class="ui blue segment"></div>
+                    </div>
 
+                }
             </div>
         </div>
     </div>
@@ -304,5 +369,71 @@
                 ]
             }]
         });
+    </script>
+
+    <script>
+
+        var result_c4 = @Html.Raw(@JsonConvert.SerializeObject(Model.ConsumoProducao))
+
+        var cats = [];
+        var volumeProduzido = [];
+        var volumeConsumido = [];
+        var volumeFaturado = [];
+
+        volumeProduzido.name = 'Volume de Água Produzido'
+        volumeProduzido.data = []
+
+        volumeConsumido.name = 'Volume Consumido'
+        volumeConsumido.data = []
+
+        volumeFaturado.name = 'Volume Faturado'
+        volumeFaturado.data = []
+
+        $(result_c4).each(function (index) {
+            cats.push(result_c1[index].Competencia);
+
+            volumeProduzido.data.push(result_c4[index].AG006 + result_c4[index].AG018);
+
+            volumeConsumido.data.push(result_c4[index].AG010);
+
+            volumeFaturado.data.push(result_c4[index].AG011);
+        });
+
+    Highcharts.chart('chartFourContainer', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: cats
+        },
+        yAxis: [
+            {
+                title: { text: 'Produção e Consumo' }
+            }],
+        tooltip: {
+            formatter: function () {
+                return '' +
+                    this.x + ': ' + Highcharts.numberFormat(this.y, 2, ',', '.') +
+                    (this.series.name.indexOf('%') > 0 ? '%' : '');
+                //'Coverage with Water Service, %' ? '%' : '');
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: false
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [volumeProduzido, volumeConsumido, volumeFaturado]
+    });
+
     </script>
 }
