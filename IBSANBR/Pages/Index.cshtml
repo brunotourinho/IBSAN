@@ -23,7 +23,6 @@
                         </div>
                     </div>
                     <div class="ui error message"></div>
-
                 </form>
             </div>
         </div>
@@ -31,94 +30,143 @@
         {
             <div class="row">
                 <div class="column">
-                    <h4>Estatísticas - @Model.Estatisticas.FirstOrDefault().Prestador - @Model.Estatisticas.FirstOrDefault().Competencia</h4>
-                    <div class="ui blue center aligned segment">
-                        <div class="ui mini stackable statistics" style="justify-content: center;">
-                            <div class="ui statistic">
-                                <div class="value">
-                                    @Model.Estatisticas.FirstOrDefault().AG003
+                    @if (Model.Estatisticas != null)
+                    {
+                        foreach(var p in Model.Estatisticas.Prestadores)
+                        {
+                            <h4>@p</h4>
+                        }
+                        <div class="ui blue center aligned segment">
+                            <div class="ui mini stackable statistics" style="justify-content: center;">
+                                <div class="ui statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.AG003
+                                    </div>
+                                    <div class="label">
+                                        Número de Economias Ativas<br />Água
+                                    </div>
                                 </div>
-                                <div class="label">
-                                    Número de Economias Ativas<br />Água
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.ES003
+                                    </div>
+                                    <div class="label">
+                                        Número de Economias Ativas<br />Esgoto
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ui small statistic">
-                                <div class="value">
-                                    @Model.Estatisticas.FirstOrDefault().ES003
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.AG005
+                                    </div>
+                                    <div class="label">
+                                        Extensão da Rede<br />Água
+                                    </div>
                                 </div>
-                                <div class="label">
-                                    Número de Economias Ativas<br />Esgoto
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.AG005
+                                    </div>
+                                    <div class="label">
+                                        Extensão da Rede<br />Água
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ui small statistic">
-                                <div class="value">
-                                    @Model.Estatisticas.FirstOrDefault().AG005
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.ES004
+                                    </div>
+                                    <div class="label">
+                                        Extensão da Rede<br />Esgoto
+                                    </div>
                                 </div>
-                                <div class="label">
-                                    Extensão da Rede<br />Água
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.IN055
+                                    </div>
+                                    <div class="label">
+                                        Atendimento de Água
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ui small statistic">
-                                <div class="value">
-                                    @Model.Estatisticas.FirstOrDefault().ES004
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.IN056
+                                    </div>
+                                    <div class="label">
+                                        Atendimento de Esgoto
+                                    </div>
                                 </div>
-                                <div class="label">
-                                    Extensão da Rede<br />Esgoto
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.IN049
+                                    </div>
+                                    <div class="label">
+                                        Perdas na Distribuição<br />Água
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ui small statistic">
-                                <div class="value">
-                                    @{
-                                        decimal consumoResidencial = 0;
-                                        if (Model.Estatisticas.FirstOrDefault().AG013 > 0 && Model.Estatisticas.FirstOrDefault().AG013 > 0)
-                                        {
-                                            consumoResidencial = (Model.Estatisticas.FirstOrDefault().AG013 / Model.Estatisticas.FirstOrDefault().AG013) * 100;
-                                        }
-                                    }
-                                    @consumoResidencial
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.IN012
+                                    </div>
+                                    <div class="label">
+                                        Desempenho Financeiro
+                                    </div>
                                 </div>
-                                <div class="label">
-                                    Consumo Residencial
+                                <div class="ui small statistic">
+                                    <div class="value">
+                                        @Model.Estatisticas.IN043
+                                    </div>
+                                    <div class="label">
+                                        Consumo Residencial
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         }
-        <div class="ui two column row">
-            @if (Model.PopulacaoCobertura != null)
-            {
-                <div class="ui column">
-                    <div id="chartOneContainer" class="ui blue segment"></div>
-                </div>
-            }
-            @if (Model.ReceitaCustoOperacao != null)
-            {
-                <div class="ui column">
-                    <div id="chartTwoContainer" class="ui blue segment"></div>
-                </div>
-
-            }
-        </div>
-        <div class="ui two column row">
-            @if (Model.Custos != null)
-            {
-                <div class="ui column">
-                    <div id="chartThreeContainer" class="ui blue segment"></div>
-                </div>
-
-            }
-            <div class="ui column">
-                @if (Model.ConsumoProducao != null)
+            <div class="ui two column row">
+                @if (Model.PopulacaoAtendimento != null)
                 {
                     <div class="ui column">
-                        <div id="chartFourContainer" class="ui blue segment"></div>
+                        <div id="chartOneContainer" class="ui blue segment"></div>
+                    </div>
+                }
+                @if (Model.ProducaoConsumo != null)
+                {
+                    <div class="ui column">
+                        <div id="chartTwoContainer" class="ui blue segment"></div>
                     </div>
 
                 }
+                
             </div>
-        </div>
+            <div class="ui two column row">
+                @if (Model.PerdasAgua != null)
+                {
+                    <div class="ui column">
+                        <div id="chartThreeContainer" class="ui blue segment"></div>
+                    </div>
+
+                }
+                <div class="ui column">
+                    @if (Model.ReceitaDespesaDesempenho != null)
+                    {
+                        <div class="ui column">
+                            <div id="chartFourContainer" class="ui blue segment"></div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="ui two column row">
+                @if (Model.ParticipacaoDespesas != null)
+                {
+                    <div class="ui column">
+                        <div id="chartFiveContainer" class="ui blue segment"></div>
+                    </div>
+
+                }
+            </div>  
     </div>
 </div>
 @section scripts {
@@ -131,7 +179,7 @@
     </script>
     <script>
 
-        var result_c1 = @Html.Raw(@JsonConvert.SerializeObject(Model.PopulacaoCobertura))
+        var result_c1 = @Html.Raw(@JsonConvert.SerializeObject(Model.PopulacaoAtendimento))
 
         var cats = [];
         var populacao = [];
@@ -153,13 +201,8 @@
             cats.push(result_c1[index].Competencia);
 
             populacao.data.push(result_c1[index].GE12A);
-
-            atendimentoTotal.data.push(
-               ((result_c1[index].AG001 / result_c1[index].GE12A) * 100)
-            );
-            atendimentoEsgoto.data.push(
-                ((result_c1[index].ES001 / result_c1[index].GE12A) * 100)
-            );
+            atendimentoTotal.data.push(result_c1[index].IN055);
+            atendimentoEsgoto.data.push(result_c1[index].IN056);
         });
 
     Highcharts.chart('chartOneContainer', {
@@ -202,178 +245,11 @@
         },
         series: [populacao, atendimentoTotal, atendimentoEsgoto]
     });
-
-    </script>
-    <script>
-
-        var result_c2 = @Html.Raw(@JsonConvert.SerializeObject(Model.ReceitaCustoOperacao))
-
-        var cats = [];
-        var receitaTotal = [];
-        var despesaTotal = [];
-        var desempenho = [];
-
-
-        desempenho.name = 'Desempenho';
-        desempenho.data = [];
-        desempenho.yAxis = 1;
-
-        receitaTotal.name = 'Receita Total'
-        receitaTotal.data = []
-        receitaTotal.type = 'column';
-
-        despesaTotal.name = 'Despesa Total'
-        despesaTotal.data = []
-        despesaTotal.type = 'column';
-
-        $(result_c2).each(function (index) {
-            cats.push(result_c2[index].Competencia);
-
-            receitaTotal.data.push(result_c2[index].FN001);
-            despesaTotal.data.push(result_c2[index].FN017);
-            desempenho.data.push(
-                ((result_c2[index].FN001 / result_c2[index].FN017) * 100)
-            );
-        });
-
-        Highcharts.chart('chartTwoContainer', {
-
-            chart: {
-                defaultSeriesType: 'line'
-            },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
-            },
-            xAxis: {
-                categories: cats
-            },
-            yAxis: [{
-                title: {
-                    text: 'Receita e Custos, R$',
-                }
-            }, {
-                title: {
-                    text: 'Operações',
-                    style: {
-                        color: '#4572A7'
-                    }
-                },
-                labels: {
-                    formatter: function () {
-                        return Highcharts.numberFormat(this.value) + '';
-                    },
-                    style: {
-                        color: '#4572A7'
-                    }
-                },
-                opposite: true
-                }],
-            tooltip: {
-                formatter: function () {
-                    return '' + this.x + ': ' + (this.series.name == 'Desempenho' ? '' : 'R$ ') + Highcharts.numberFormat(this.y);
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    enableMouseTracking: true
-                }
-            },
-            series: [receitaTotal, despesaTotal, desempenho]
-        });
-
-
     </script>
 
     <script>
 
-        var result_c3 = @Html.Raw(@JsonConvert.SerializeObject(Model.Custos))
-
-            Highcharts.chart('chartThreeContainer',
-            {
-            chart: {
-                margin: [0, 0, 40, 0],
-                spacing: [0, 0, 20, 0]
-            },
-            title: {
-                text: ''//'Consumption Break-Down, 2016'
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.point.name + '</b><br/> ' + Math.round(this.percentage) + ' %';
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    size: '75%',
-                    cursor: 'pointer',
-                    showInLegend: true,
-                    dataLabels: {
-                        enabled: true,
-                        formatter: function () {
-                            return Math.round(this.percentage) + ' %';
-                        }
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Custos',
-                data: [
-                    {
-                        name: 'Pessoal Próprio',
-                        y: parseFloat(result_c3.FN010),
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Produtos Químicos',
-                        y: parseFloat(result_c3.FN011),
-                        sliced: true,
-                        selected: true
-                    },
-                    {
-                        name: 'Energia elétrica',
-                        y: parseFloat(result_c3.FN013),
-                        sliced: true,
-                        selected: true
-
-                    },
-                    {
-                        name: 'Serviços de Terceiros',
-                        y: parseFloat(result_c3.FN014),
-                        sliced: true,
-                        selected: true
-
-                    },
-                    {
-                        name: 'Fiscais ou Tributárias',
-                        y: parseFloat(result_c3.FN021),
-                        sliced: true,
-                        selected: true
-
-                    },
-                    {
-                        name: 'Outras',
-                        y: parseFloat(result_c3.OUTRAS),
-                        sliced: true,
-                        selected: true
-
-                    }
-                ]
-            }]
-        });
-    </script>
-
-    <script>
-
-        var result_c4 = @Html.Raw(@JsonConvert.SerializeObject(Model.ConsumoProducao))
+        var result_c2 = @Html.Raw(@JsonConvert.SerializeObject(Model.ProducaoConsumo))
 
         var cats = [];
         var volumeProduzido = [];
@@ -389,17 +265,17 @@
         volumeFaturado.name = 'Volume Faturado'
         volumeFaturado.data = []
 
-        $(result_c4).each(function (index) {
+        $(result_c2).each(function (index) {
             cats.push(result_c1[index].Competencia);
 
-            volumeProduzido.data.push(result_c4[index].AG006 + result_c4[index].AG018);
+            volumeProduzido.data.push(result_c2[index].AG006 + result_c2[index].AG018);
 
-            volumeConsumido.data.push(result_c4[index].AG010);
+            volumeConsumido.data.push(result_c2[index].AG010);
 
-            volumeFaturado.data.push(result_c4[index].AG011);
+            volumeFaturado.data.push(result_c2[index].AG011);
         });
 
-    Highcharts.chart('chartFourContainer', {
+    Highcharts.chart('chartTwoContainer', {
         chart: {
             type: 'line'
         },
@@ -434,6 +310,213 @@
         },
         series: [volumeProduzido, volumeConsumido, volumeFaturado]
     });
+    </script>
+
+    <script>
+
+        var result_c3 = @Html.Raw(@JsonConvert.SerializeObject(Model.PerdasAgua))
+
+        var cats = [];
+        var perdasDistribuicao = [];
+        var perdasLineares = [];
+
+        perdasDistribuicao.name = '- Índice de Perdas na Distribuição'
+        perdasDistribuicao.data = []
+
+        perdasLineares.name = 'Índice de Perdas Lineares'
+        perdasLineares.data = []
+
+        $(result_c3).each(function (index) {
+            cats.push(result_c3[index].Competencia);
+
+            perdasDistribuicao.data.push(result_c3[index].IN049);
+            perdasLineares.data.push(result_c3[index].IN050);
+        });
+
+        Highcharts.chart('chartThreeContainer', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: cats
+            },
+            yAxis: [
+                {
+                    title: { text: 'Perdas de Água' }
+                }],
+            tooltip: {
+                formatter: function () {
+                    return '' +
+                        this.x + ': ' + Highcharts.numberFormat(this.y, 2, ',', '.') +
+                        (this.series.name.indexOf('%') > 0 ? '%' : '');
+                    //'Coverage with Water Service, %' ? '%' : '');
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [perdasDistribuicao, perdasLineares]
+        });
+    </script>
+
+    <script>
+
+        var result_c4 = @Html.Raw(@JsonConvert.SerializeObject(Model.ReceitaDespesaDesempenho))
+
+                        var cats = [];
+                        var receitaTotal = [];
+                        var despesaTotal = [];
+                        var desempenho = [];
+
+                        desempenho.name = 'Desempenho';
+                        desempenho.data = [];
+                        desempenho.yAxis = 1;
+
+                        receitaTotal.name = 'Receitas por M³ Faturado'
+                        receitaTotal.data = []
+                        receitaTotal.type = 'column';
+
+                        despesaTotal.name = 'Despesa por M³ Faturado'
+                        despesaTotal.data = []
+                        despesaTotal.type = 'column';
+
+                        $(result_c4).each(function (index) {
+                            cats.push(result_c4[index].Competencia);
+
+                            receitaTotal.data.push(result_c4[index].IN004);
+                            despesaTotal.data.push(result_c4[index].IN003);
+                            desempenho.data.push(result_c4[index].IN012);
+                        });
+
+                        Highcharts.chart('chartFourContainer', {
+
+                            chart: {
+                                defaultSeriesType: 'line'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: cats
+                            },
+                            yAxis: [{
+                                title: {
+                                    text: 'Receita e Custos, R$',
+                                }
+                            }, {
+                                title: {
+                                    text: 'Operações',
+                                    style: {
+                                        color: '#4572A7'
+                                    }
+                                },
+                                labels: {
+                                    formatter: function () {
+                                        return Highcharts.numberFormat(this.value) + '';
+                                    },
+                                    style: {
+                                        color: '#4572A7'
+                                    }
+                                },
+                                opposite: true
+                                }],
+                            tooltip: {
+                                formatter: function () {
+                                    return '' + this.x + ': ' + (this.series.name == 'Desempenho' ? '' : 'R$ ') + Highcharts.numberFormat(this.y);
+                                }
+                            },
+                            plotOptions: {
+                                line: {
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    enableMouseTracking: true
+                                }
+                            },
+                            series: [receitaTotal, despesaTotal, desempenho]
+                        });
+    </script>
+
+    <script>
+
+        var result_c5 = @Html.Raw(@JsonConvert.SerializeObject(Model.ParticipacaoDespesas))
+
+        Highcharts.chart('chartFiveContainer',
+            {
+                chart: {
+                    margin: [0, 0, 40, 0],
+                    spacing: [0, 0, 20, 0]
+                },
+                title: {
+                    text: ''//'Consumption Break-Down, 2016'
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b><br /> ' + Math.round(this.percentage) + ' %';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        size: '75%',
+                        cursor: 'pointer',
+                        showInLegend: true,
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return Math.round(this.percentage) + ' %';
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Custos',
+                    data: [
+                        {
+                            name: 'Pessoal Total',
+                            y: parseFloat(result_c5.IN036),
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Produtos Químicos',
+                            y: parseFloat(result_c5.IN038),
+                            sliced: true,
+                            selected: true
+                        },
+                        {
+                            name: 'Energia elétrica',
+                            y: parseFloat(result_c5.IN037),
+                            sliced: true,
+                            selected: true
+
+                        },
+                        {
+                            name: 'Outras Despesas',
+                            y: parseFloat(result_c5.IN039),
+                            sliced: true,
+                            selected: true
+
+                        }
+                    ]
+                }]
+            });
 
     </script>
+
 }

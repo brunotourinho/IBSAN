@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IBSANBR.Models
 {
-    public class ConsumoProducao
+    public class ProducaoConsumo
     {
         public string Competencia { get; set; }
         public decimal AG006 { get; set; }

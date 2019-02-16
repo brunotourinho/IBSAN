@@ -17,19 +17,22 @@ namespace IBSANBR
         public List<Municipio> Municipios { get; set; }
 
         [BindProperty]
-        public List<PopulacaoCobertura> PopulacaoCobertura { get; set; }
+        public List<PopulacaoAtendimento> PopulacaoAtendimento { get; set; }
 
         [BindProperty]
-        public List<ReceitaCustoOperacao> ReceitaCustoOperacao { get; set; }
+        public List<ReceitaDespesaDesempenho> ReceitaDespesaDesempenho { get; set; }
 
         [BindProperty]
-        public Custos Custos { get; set; }
+        public List<PerdasAgua> PerdasAgua { get; set; }
 
         [BindProperty]
-        public List<ConsumoProducao> ConsumoProducao { get; set; }
+        public ParticipacaoDespesas ParticipacaoDespesas { get; set; }
 
         [BindProperty]
-        public List<Estatisticas> Estatisticas { get; set; }
+        public List<ProducaoConsumo> ProducaoConsumo { get; set; }
+
+        [BindProperty]
+        public Estatisticas Estatisticas { get; set; }
 
 
         public IndexModel(InformacoesRepository infoRepository)
@@ -46,10 +49,11 @@ namespace IBSANBR
         public async Task<IActionResult> OnPostAsync()
         {
             Municipios = await _infoRepository.Listar();
-            PopulacaoCobertura = await _infoRepository.PopulacaoCobertura(CodigoMunicipio);
-            ReceitaCustoOperacao = await _infoRepository.ReceitaCustoOperacao(CodigoMunicipio);
-            Custos = await _infoRepository.Custos(CodigoMunicipio);
-            ConsumoProducao = await _infoRepository.ConsumoProducao(CodigoMunicipio);
+            PopulacaoAtendimento = await _infoRepository.PopulacaoAtendimento(CodigoMunicipio);
+            ProducaoConsumo = await _infoRepository.ConsumoProducao(CodigoMunicipio);
+            PerdasAgua = await _infoRepository.PerdasAgua(CodigoMunicipio);
+            ReceitaDespesaDesempenho = await _infoRepository.ReceitaDespesaDesempenho(CodigoMunicipio);
+            ParticipacaoDespesas = await _infoRepository.ParticipacaoDespesas(CodigoMunicipio);
             Estatisticas = await _infoRepository.Estatisticas(CodigoMunicipio);
             return Page();
         }

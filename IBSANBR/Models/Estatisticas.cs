@@ -7,12 +7,15 @@ namespace IBSANBR.Models
 {
     public class Estatisticas
     {
-        public string Competencia { get; set; }
-        public string Prestador { get; set; }
+        public List<string> Prestadores { get; set; }
         public decimal AG003 { get; set; }
         public decimal ES003 { get; set; }
         public decimal AG005 { get; set; }
         public decimal ES004 { get; set; }
-        public decimal AG013 { get; set; }
+        public decimal IN012 { get; set; }
+        public decimal IN043 { get; set; }
+        public decimal IN049 { get; set; }
+        public decimal IN055 { get; set; }
+        public decimal IN056 { get; set; }
     }
 }
