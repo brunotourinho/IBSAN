@@ -80,7 +80,7 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.AG003, Informacoes.ES003, Informacoes.AG005, Informacoes.ES005, Informacoes.IN055, Informacoes.IN056, Informacoes.IN049, Informacoes.IN012, Informacoes.IN043 FROM Informacoes WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Informacoes.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.AG003, Informacoes.ES003, Informacoes.AG005, Informacoes.ES004, Informacoes.IN055, Informacoes.IN056, Informacoes.IN049, Informacoes.IN012, Informacoes.IN043 FROM Informacoes WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Informacoes.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
                 var resultP = await db.QueryAsync<string>(@"SET SQL_BIG_SELECTS=1; SELECT CONCAT(Prestadores.Prestador, ' - ' , Prestadores.Sigla) AS Prestador FROM Prestadores WHERE Prestadores.CodigoMunicipio = ?CodigoMunicipio AND Prestadores.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes)", new { CodigoMunicipio = codigoMunicipio });
 
                 var e = new Estatisticas()
