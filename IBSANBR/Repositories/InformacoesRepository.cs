@@ -20,13 +20,47 @@ namespace IBSANBR.Repositories
 
         internal IDbConnection Connection => new MySqlConnection(_connectionString);
 
+        public async Task<ElementoEstadual> ListarElementosEstaduais(string uf, string competencia)
+        {
+            using (IDbConnection db = Connection)
+            {
+                return await db.QuerySingleOrDefaultAsync<ElementoEstadual>(@"SELECT * FROM IndicadoresEstaduais WHERE UF = ?UF AND Competencia = ?Competencia", 
+                    new { UF = uf, Competencia = competencia });
+            }
+        }
 
-        public async Task<List<Municipio>> Listar()
+        public async Task<ElementoNacional> ListarElementosNacionais(string competencia)
+        {
+            using (IDbConnection db = Connection)
+            {
+                return await db.QuerySingleOrDefaultAsync<ElementoNacional>(@"SELECT * FROM IndicadoresNacionais WHERE Competencia = ?Competencia",
+                    new { Competencia = competencia });
+            }
+        }
+
+        public async Task<List<Elemento>> ListarElementosIN()
+        {
+            using (IDbConnection db = Connection)
+            {
+                var result = await db.QueryAsync<Elemento>(@"SELECT * FROM Elementos WHERE substr(CodigoElemento, 1, 2) = 'IN' ORDER BY Elementos.CodigoElemento");
+                return result.ToList();
+            }
+        }
+
+        public async Task<List<Municipio>> ListarMunicipios()
         {
             using (IDbConnection db = Connection)
             {
                 var result = await db.QueryAsync<Municipio>(@"SELECT DISTINCT Municipios.CodigoMunicipio, Municipios.Nome, Municipios.UF FROM Municipios ORDER BY Municipios.Nome");
                 return result.ToList();
+            }
+        }
+
+        public async Task<Municipio> ListarMunicipios(string codigoMunicipio)
+        {
+            using (IDbConnection db = Connection)
+            {
+                return await db.QuerySingleOrDefaultAsync<Municipio>(@"SELECT Municipios.CodigoMunicipio, Municipios.Nome, Municipios.UF FROM Municipios WHERE CodigoMunicipio = ?CodigoMunicipio", new { CodigoMunicipio = codigoMunicipio });
             }
         }
 
