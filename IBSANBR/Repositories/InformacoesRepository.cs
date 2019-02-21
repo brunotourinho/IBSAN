@@ -20,24 +20,6 @@ namespace IBSANBR.Repositories
 
         internal IDbConnection Connection => new MySqlConnection(_connectionString);
 
-        public async Task<ElementoEstadual> ListarElementosEstaduais(string uf, string competencia)
-        {
-            using (IDbConnection db = Connection)
-            {
-                return await db.QuerySingleOrDefaultAsync<ElementoEstadual>(@"SELECT * FROM IndicadoresEstaduais WHERE UF = ?UF AND Competencia = ?Competencia", 
-                    new { UF = uf, Competencia = competencia });
-            }
-        }
-
-        public async Task<ElementoNacional> ListarElementosNacionais(string competencia)
-        {
-            using (IDbConnection db = Connection)
-            {
-                return await db.QuerySingleOrDefaultAsync<ElementoNacional>(@"SELECT * FROM IndicadoresNacionais WHERE Competencia = ?Competencia",
-                    new { Competencia = competencia });
-            }
-        }
-
         public async Task<List<Elemento>> ListarElementosIN()
         {
             using (IDbConnection db = Connection)
@@ -51,7 +33,7 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<Municipio>(@"SELECT DISTINCT Municipios.CodigoMunicipio, Municipios.Nome, Municipios.UF FROM Municipios ORDER BY Municipios.Nome");
+                var result = await db.QueryAsync<Municipio>(@"SELECT municipios.Id, municipios.CodigoMunicipio, municipios.Nome, municipios.UF FROM municipios ORDER BY municipios.Nome");
                 return result.ToList();
             }
         }
@@ -69,7 +51,14 @@ namespace IBSANBR.Repositories
             using (IDbConnection db = Connection)
             {
                 var result = await db.QueryAsync<PopulacaoAtendimento>(
-                    @"SET SQL_BIG_SELECTS=1; SELECT Populacao.Competencia, Populacao.GE12A, Informacoes.IN055, Informacoes.IN056 FROM Populacao INNER JOIN Informacoes on Populacao.CodigoMunicipio = Informacoes.CodigoMunicipio AND Populacao.Competencia = Informacoes.Competencia WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Populacao.Competencia in (2010,2011,2012,2013,2014,2015,2016) GROUP BY Populacao.Competencia ORDER BY Populacao.Competencia",
+                    @"SET SQL_BIG_SELECTS=1; 
+                    SELECT ibsanbr_inf_ge.Referencia, ibsanbr_inf_ge.POP_TOT, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056 
+                    FROM  ibsanbr_inf_ge
+                    INNER JOIN ibsanbr_ind_ag ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_ag.CodigoMunicipio
+                    INNER JOIN ibsanbr_ind_es ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_es.CodigoMunicipio
+                    WHERE ibsanbr_inf_ge.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ge.Referencia in (2010,2011,2012,2013,2014,2015,2016) 
+                    GROUP BY ibsanbr_inf_ge.Referencia
+                    ORDER BY ibsanbr_inf_ge.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }

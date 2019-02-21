@@ -48,7 +48,15 @@
             // 
             this.ddlTipoArquivo.FormattingEnabled = true;
             this.ddlTipoArquivo.Items.AddRange(new object[] {
-            "IBSANBR_IND_AG"});
+            "IND_AG",
+            "IND_ES",
+            "IND_FIN",
+            "IND_QD",
+            "INF_AG",
+            "INF_ES",
+            "INF_FN",
+            "INF_GE",
+            "INF_QD"});
             this.ddlTipoArquivo.Location = new System.Drawing.Point(12, 136);
             this.ddlTipoArquivo.Name = "ddlTipoArquivo";
             this.ddlTipoArquivo.Size = new System.Drawing.Size(304, 21);

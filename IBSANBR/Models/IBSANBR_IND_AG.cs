@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMPORTADOR.Models
+namespace IBSANBR.Models
 {
     [Table("ibsanbr_ind_ag")]
     class IBSANBR_IND_AG

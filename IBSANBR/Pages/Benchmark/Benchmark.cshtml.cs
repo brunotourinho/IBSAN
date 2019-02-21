@@ -58,16 +58,16 @@ namespace IBSANBR.Pages.Benchmark
                 {
                     foreach (var c in CompetenciaSelecionados)
                     {
-                        ElementoNacional elementoNacional = await _infoRepository.ListarElementosNacionais(c);
-                        ElementoEstadual elementoEstadual = await _infoRepository.ListarElementosEstaduais(m.UF, c);
-                        decimal valorElementoNacional = GetPropValue(elementoNacional, en);
-                        decimal valorElementoEstadual = GetPropValue(elementoEstadual, en);
+                        //ElementoNacional elementoNacional = await _infoRepository.ListarElementosNacionais(c);
+                        //ElementoEstadual elementoEstadual = await _infoRepository.ListarElementosEstaduais(m.UF, c);
+                        //decimal valorElementoNacional = GetPropValue(elementoNacional, en);
+                        //decimal valorElementoEstadual = GetPropValue(elementoEstadual, en);
                         //decimal valorElementoMunicipal = GetPropValue(elementoMunicipal, en);
 
                         Benchmark.Series.Add(new BenchmarkSerie()
                         {
                             name = en,
-                            data = new decimal[] { valorElementoEstadual, valorElementoNacional }
+                            //data = new decimal[] { valorElementoEstadual, valorElementoNacional }
                         });
 
                     }

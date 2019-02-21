@@ -72,6 +72,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\IBSANBR_INF_QD.cs" />
+    <Compile Include="Models\IBSANBR_INF_GE.cs" />
+    <Compile Include="Models\IBSANBR_INF_FN.cs" />
+    <Compile Include="Models\IBSANBR_INF_ES.cs" />
+    <Compile Include="Models\IBSANBR_INF_AG.cs" />
+    <Compile Include="Models\IBSANBR_IND_QD.cs" />
+    <Compile Include="Models\IBSANBR_IND_FIN.cs" />
+    <Compile Include="Models\IBSANBR_IND_ES.cs" />
     <Compile Include="Models\IBSANBR_IND_AG.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
