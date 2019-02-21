@@ -16,6 +16,7 @@ namespace IMPORTADOR.Repositories
     {
         private readonly string _connectionString;
         internal IDbConnection Connection => new MySql.Data.MySqlClient.MySqlConnection(_connectionString);
+        public int foo;
 
         private List<IBSANBR_IND_AG> retList;
 
