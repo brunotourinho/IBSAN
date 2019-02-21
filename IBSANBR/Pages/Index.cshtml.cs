@@ -34,7 +34,6 @@ namespace IBSANBR
         [BindProperty]
         public Estatisticas Estatisticas { get; set; }
 
-
         public IndexModel(InformacoesRepository infoRepository)
         {
             _infoRepository = infoRepository;

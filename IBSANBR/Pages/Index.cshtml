@@ -124,49 +124,48 @@
                 </div>
             </div>
         }
-            <div class="ui two column row">
-                @if (Model.PopulacaoAtendimento != null)
-                {
-                    <div class="ui column">
-                        <div id="chartOneContainer" class="ui blue segment"></div>
-                    </div>
-                }
-                @if (Model.ProducaoConsumo != null)
-                {
-                    <div class="ui column">
-                        <div id="chartTwoContainer" class="ui blue segment"></div>
-                    </div>
-
-                }
-                
-            </div>
-            <div class="ui two column row">
-                @if (Model.PerdasAgua != null)
-                {
-                    <div class="ui column">
-                        <div id="chartThreeContainer" class="ui blue segment"></div>
-                    </div>
-
-                }
+        <div class="ui two column row">
+            @if (Model.PopulacaoAtendimento != null)
+            {
                 <div class="ui column">
-                    @if (Model.ReceitaDespesaDesempenho != null)
-                    {
-                        <div class="ui column">
-                            <div id="chartFourContainer" class="ui blue segment"></div>
-                        </div>
-
-                    }
+                    <div id="chartOneContainer" class="ui blue segment"></div>
                 </div>
-            </div>
-            <div class="ui two column row">
-                @if (Model.ParticipacaoDespesas != null)
+            }
+            @if (Model.ProducaoConsumo != null)
+            {
+                <div class="ui column">
+                    <div id="chartTwoContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+        </div>
+        <div class="ui two column row">
+            @if (Model.PerdasAgua != null)
+            {
+                <div class="ui column">
+                    <div id="chartThreeContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+            <div class="ui column">
+                @if (Model.ReceitaDespesaDesempenho != null)
                 {
                     <div class="ui column">
-                        <div id="chartFiveContainer" class="ui blue segment"></div>
+                        <div id="chartFourContainer" class="ui blue segment"></div>
                     </div>
 
                 }
-            </div>  
+            </div>
+        </div>
+        <div class="ui two column row">
+            @if (Model.ParticipacaoDespesas != null)
+            {
+                <div class="ui column">
+                    <div id="chartFiveContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+        </div>
     </div>
 </div>
 @section scripts {
@@ -516,7 +515,6 @@
                     ]
                 }]
             });
-
     </script>
 
 }

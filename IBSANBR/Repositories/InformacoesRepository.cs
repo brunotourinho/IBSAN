@@ -51,18 +51,18 @@ namespace IBSANBR.Repositories
             using (IDbConnection db = Connection)
             {
                 var result = await db.QueryAsync<PopulacaoAtendimento>(
-                    @"SET SQL_BIG_SELECTS=1; 
-                    SELECT ibsanbr_inf_ge.Referencia, ibsanbr_inf_ge.POP_TOT, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056 
+                    @"SET SQL_BIG_SELECTS=1;
+                    SELECT ibsanbr_inf_ge.Referencia, ibsanbr_inf_ge.POP_TOT, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056
                     FROM  ibsanbr_inf_ge
                     INNER JOIN ibsanbr_ind_ag ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_ag.CodigoMunicipio
                     INNER JOIN ibsanbr_ind_es ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_es.CodigoMunicipio
-                    WHERE ibsanbr_inf_ge.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ge.Referencia in (2010,2011,2012,2013,2014,2015,2016) 
+                    WHERE ibsanbr_inf_ge.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ge.Referencia in (2010,2011,2012,2013,2014,2015,2016)
                     GROUP BY ibsanbr_inf_ge.Referencia
                     ORDER BY ibsanbr_inf_ge.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
-        }       
+        }
 
         public async Task<List<ProducaoConsumo>> ConsumoProducao(string codigoMunicipio)
         {

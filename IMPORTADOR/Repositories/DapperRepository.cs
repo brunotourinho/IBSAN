@@ -1,18 +1,15 @@
-﻿using Dapper;
+﻿using Dapper.Contrib.Extensions;
 using IMPORTADOR.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Dapper.Contrib.Extensions;
 
 namespace IMPORTADOR.Repositories
 {
-    class DapperRepository
+    internal class DapperRepository
     {
         private readonly string _connectionString;
         internal IDbConnection Connection => new MySql.Data.MySqlClient.MySqlConnection(_connectionString);
@@ -46,7 +43,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -67,7 +63,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -88,7 +83,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -109,7 +103,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -130,7 +123,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -151,7 +143,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -172,7 +163,6 @@ namespace IMPORTADOR.Repositories
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
@@ -188,11 +178,11 @@ namespace IMPORTADOR.Repositories
                 throw ex;
             }
         }
+
         public async Task INSERT_IBSANBR_INF_QD(List<IBSANBR_INF_QD> lista)
         {
             try
             {
-
                 using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {

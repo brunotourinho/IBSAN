@@ -35,27 +35,35 @@ namespace IMPORTADOR
                     case "IND_AG":
                         await IMPORTAR_IND_AG(txtFileName.Text);
                         break;
+
                     case "IND_ES":
                         await IMPORTAR_IND_ES(txtFileName.Text);
                         break;
+
                     case "IND_FIN":
                         await IMPORTAR_IND_FIN(txtFileName.Text);
                         break;
+
                     case "IND_QD":
                         await IMPORTAR_IND_QD(txtFileName.Text);
                         break;
+
                     case "INF_AG":
                         await IMPORTAR_INF_AG(txtFileName.Text);
                         break;
+
                     case "INF_ES":
                         await IMPORTAR_INF_ES(txtFileName.Text);
                         break;
+
                     case "INF_FN":
                         await IMPORTAR_INF_FN(txtFileName.Text);
                         break;
+
                     case "INF_GE":
                         await IMPORTAR_INF_GE(txtFileName.Text);
                         break;
+
                     case "INF_QD":
                         await IMPORTAR_INF_QD(txtFileName.Text);
                         break;
@@ -431,7 +439,6 @@ namespace IMPORTADOR
                             AG026 = ToDecimal(fragmentos[31]),
                             AG027 = ToDecimal(fragmentos[32]),
                             AG028 = ToDecimal(fragmentos[33]),
-
                         });
                         lineCount++;
                     }
@@ -601,7 +608,6 @@ namespace IMPORTADOR
                             FN056 = ToDecimal(fragmentos[59]),
                             FN057 = ToDecimal(fragmentos[60]),
                             FN058 = ToDecimal(fragmentos[61])
-
                         });
                         lineCount++;
                     }
@@ -670,7 +676,6 @@ namespace IMPORTADOR
                             GE030 = ToDecimal(fragmentos[24]),
                             POP_TOT = ToDecimal(fragmentos[25]),
                             POP_URB = ToDecimal(fragmentos[26])
-
                         });
                         lineCount++;
                     }
@@ -743,8 +748,6 @@ namespace IMPORTADOR
                             QD026 = ToDecimal(fragmentos[28]),
                             QD027 = ToDecimal(fragmentos[29]),
                             QD028 = ToDecimal(fragmentos[30])
-
-
                         });
                         lineCount++;
                     }
