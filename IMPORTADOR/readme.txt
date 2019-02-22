@@ -3,3 +3,7 @@
 =CONCATENAR("public decimal ";A1;" { get; set; }")
 
 =CONCATENAR(A1;" = ToDecimal(fragmentos[";B1;"])")
+
+utf8mb4_0900_ai_ci
+
+utf8mb4_general_ci
