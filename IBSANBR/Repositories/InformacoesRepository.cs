@@ -52,11 +52,11 @@ namespace IBSANBR.Repositories
             {
                 var result = await db.QueryAsync<PopulacaoAtendimento>(
                     @"SET SQL_BIG_SELECTS=1;
-                    SELECT ibsanbr_inf_ge.Referencia, ibsanbr_inf_ge.POP_TOT, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056
+                    SELECT ibsanbr_inf_ge.Referencia AS Referencia, ibsanbr_ind_ag.IN055 AS IN055, ibsanbr_ind_es.IN056 AS IN056, ibsanbr_inf_ge.POP_TOT AS POP_TOT
                     FROM  ibsanbr_inf_ge
                     INNER JOIN ibsanbr_ind_ag ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_ag.CodigoMunicipio
                     INNER JOIN ibsanbr_ind_es ON ibsanbr_inf_ge.CodigoMunicipio = ibsanbr_ind_es.CodigoMunicipio
-                    WHERE ibsanbr_inf_ge.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ge.Referencia in (2010,2011,2012,2013,2014,2015,2016)
+                    WHERE ibsanbr_inf_ge.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ge.Referencia in (2012,2013,2014,2015,2016)
                     GROUP BY ibsanbr_inf_ge.Referencia
                     ORDER BY ibsanbr_inf_ge.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
@@ -68,7 +68,8 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<ProducaoConsumo>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.Competencia, Informacoes.AG006, Informacoes.AG010, Informacoes.AG011, Informacoes.AG018 FROM Informacoes WHERE Informacoes.CodigoMunicipio = CodigoMunicipio AND Informacoes.Competencia in (2010,2011,2012,2013,2014,2015,2016) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                var result = await db.QueryAsync<ProducaoConsumo>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_inf_ag.Referencia, ibsanbr_inf_ag.AG006, ibsanbr_inf_ag.AG010, ibsanbr_inf_ag.AG011, ibsanbr_inf_ag.AG018 FROM ibsanbr_inf_ag WHERE ibsanbr_inf_ag.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ag.Referencia in (2012,2013,2014,2015,2016) ORDER BY ibsanbr_inf_ag.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
         }
@@ -77,7 +78,8 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<PerdasAgua>(@"SET SQL_BIG_SELECTS = 1; SELECT Informacoes.Competencia, Informacoes.IN049, Informacoes.IN050 FROM Informacoes WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Informacoes.Competencia in (2010, 2011, 2012, 2013, 2014, 2015, 2016) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                var result = await db.QueryAsync<PerdasAgua>(@"SET SQL_BIG_SELECTS = 1; SELECT ibsanbr_ind_ag.Referencia, ibsanbr_ind_ag.IN049, ibsanbr_ind_ag.IN050 FROM ibsanbr_ind_ag WHERE ibsanbr_ind_ag.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_ag.Referencia in (2012, 2013, 2014, 2015, 2016) GROUP BY ibsanbr_ind_ag.Referencia ORDER BY ibsanbr_ind_ag.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
         }
@@ -86,7 +88,8 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<ReceitaDespesaDesempenho>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.Competencia, Informacoes.IN003, Informacoes.IN004, Informacoes.IN012 FROM Informacoes WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Informacoes.Competencia in (2010,2011,2012,2013,2014,2015,2016) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                var result = await db.QueryAsync<ReceitaDespesaDesempenho>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fin.Referencia, ibsanbr_ind_fin.IN003, ibsanbr_ind_fin.IN004, ibsanbr_ind_fin.IN012 FROM ibsanbr_ind_fin WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia in (2012,2013,2014,2015,2016) ORDER BY ibsanbr_ind_fin.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
         }
@@ -95,7 +98,8 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                return await db.QuerySingleOrDefaultAsync<ParticipacaoDespesas>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.Competencia, Informacoes.IN036, Informacoes.IN037, Informacoes.IN038, Informacoes.IN039 FROM Informacoes WHERE Informacoes.CodigoMunicipio = '120001' AND Informacoes.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
+                return await db.QuerySingleOrDefaultAsync<ParticipacaoDespesas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fin.Referencia, ibsanbr_ind_fin.IN036, ibsanbr_ind_fin.IN037, ibsanbr_ind_fin.IN038, ibsanbr_ind_fin.IN039 FROM ibsanbr_ind_fin WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia = (SELECT MAX(ibsanbr_ind_fin.Referencia) FROM ibsanbr_ind_fin) GROUP BY ibsanbr_ind_fin.Referencia ORDER BY ibsanbr_ind_fin.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
             }
         }
 
@@ -103,8 +107,10 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT Informacoes.AG003, Informacoes.ES003, Informacoes.AG005, Informacoes.ES004, Informacoes.IN055, Informacoes.IN056, Informacoes.IN049, Informacoes.IN012, Informacoes.IN043 FROM Informacoes WHERE Informacoes.CodigoMunicipio = ?CodigoMunicipio AND Informacoes.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes) GROUP BY Informacoes.Competencia ORDER BY Informacoes.Competencia", new { CodigoMunicipio = codigoMunicipio });
-                var resultP = await db.QueryAsync<string>(@"SET SQL_BIG_SELECTS=1; SELECT CONCAT(Prestadores.Prestador, ' - ' , Prestadores.Sigla) AS Prestador FROM Prestadores WHERE Prestadores.CodigoMunicipio = ?CodigoMunicipio AND Prestadores.Competencia = (SELECT MAX(Informacoes.Competencia) FROM Informacoes)", new { CodigoMunicipio = codigoMunicipio });
+                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_inf_ag.AG003, ibsanbr_inf_es.ES003, ibsanbr_inf_ag.AG005, ibsanbr_inf_es.ES004, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056, ibsanbr_ind_ag.IN049, ibsanbr_ind_fin.IN012, ibsanbr_ind_ag.IN043 FROM ibsanbr_ind_fin INNER JOIN ibsanbr_ind_ag ON ibsanbr_ind_ag.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_ind_es ON ibsanbr_ind_es.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_inf_ag ON ibsanbr_inf_ag.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_inf_es ON ibsanbr_inf_es.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia = (SELECT MAX(ibsanbr_ind_fin.Referencia) FROM ibsanbr_ind_fin) GROUP BY ibsanbr_ind_fin.Referencia ORDER BY ibsanbr_ind_fin.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
+                var resultP = await db.QueryAsync<string>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_inf_ag.Referencia, SUM(ibsanbr_inf_ag.AG006) AS AG006, SUM(ibsanbr_inf_ag.AG010) AS AG010, SUM(ibsanbr_inf_ag.AG011) AS AG011, SUM(ibsanbr_inf_ag.AG018) AS AG018 FROM ibsanbr_inf_ag WHERE ibsanbr_inf_ag.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_inf_ag.Referencia in (2012,2013,2014,2015,2016) GROUP BY ibsanbr_inf_ag.Referencia ORDER BY ibsanbr_inf_ag.Referencia", 
+                    new { CodigoMunicipio = codigoMunicipio });
 
                 var e = new Estatisticas()
                 {

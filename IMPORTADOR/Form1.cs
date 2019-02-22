@@ -136,28 +136,28 @@ namespace IMPORTADOR
                             Abrangencia = fragmentos[7].Trim(),
                             TipoServico = fragmentos[8].Trim(),
                             NaturezaJuridica = fragmentos[9],
-                            IN058 = ToDecimal(fragmentos[10]),
-                            IN001 = ToDecimal(fragmentos[11]),
-                            IN009 = ToDecimal(fragmentos[12]),
-                            IN010 = ToDecimal(fragmentos[13]),
-                            IN011 = ToDecimal(fragmentos[14]),
-                            IN013 = ToDecimal(fragmentos[15]),
-                            IN014 = ToDecimal(fragmentos[16]),
-                            IN017 = ToDecimal(fragmentos[17]),
-                            IN020 = ToDecimal(fragmentos[18]),
-                            IN022 = ToDecimal(fragmentos[19]),
-                            IN023 = ToDecimal(fragmentos[20]),
-                            IN025 = ToDecimal(fragmentos[21]),
-                            IN028 = ToDecimal(fragmentos[22]),
-                            IN043 = ToDecimal(fragmentos[23]),
-                            IN044 = ToDecimal(fragmentos[24]),
-                            IN049 = ToDecimal(fragmentos[25]),
-                            IN050 = ToDecimal(fragmentos[26]),
-                            IN051 = ToDecimal(fragmentos[27]),
-                            IN052 = ToDecimal(fragmentos[28]),
-                            IN053 = ToDecimal(fragmentos[29]),
-                            IN055 = ToDecimal(fragmentos[30]),
-                            IN057 = ToDecimal(fragmentos[31])
+                            IN001 = ToDecimal(fragmentos[10]),
+                            IN009 = ToDecimal(fragmentos[11]),
+                            IN010 = ToDecimal(fragmentos[12]),
+                            IN011 = ToDecimal(fragmentos[13]),
+                            IN013 = ToDecimal(fragmentos[14]),
+                            IN014 = ToDecimal(fragmentos[15]),
+                            IN017 = ToDecimal(fragmentos[16]),
+                            IN020 = ToDecimal(fragmentos[17]),
+                            IN022 = ToDecimal(fragmentos[18]),
+                            IN023 = ToDecimal(fragmentos[19]),
+                            IN025 = ToDecimal(fragmentos[20]),
+                            IN028 = ToDecimal(fragmentos[21]),
+                            IN043 = ToDecimal(fragmentos[22]),
+                            IN044 = ToDecimal(fragmentos[23]),
+                            IN049 = ToDecimal(fragmentos[24]),
+                            IN050 = ToDecimal(fragmentos[25]),
+                            IN051 = ToDecimal(fragmentos[26]),
+                            IN052 = ToDecimal(fragmentos[27]),
+                            IN053 = ToDecimal(fragmentos[28]),
+                            IN055 = ToDecimal(fragmentos[29]),
+                            IN057 = ToDecimal(fragmentos[30]),
+                            IN058 = ToDecimal(fragmentos[31])
                         });
                         lineCount++;
                     }
@@ -395,7 +395,7 @@ namespace IMPORTADOR
 
             try
             {
-                using (StreamReader sr = new StreamReader(fileName, Encoding.Unicode, true))
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
                 {
                     _watch.Start();
                     string line;
@@ -470,7 +470,7 @@ namespace IMPORTADOR
 
             try
             {
-                using (StreamReader sr = new StreamReader(fileName, Encoding.Unicode, true))
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
                 {
                     _watch.Start();
                     string line;
@@ -536,7 +536,7 @@ namespace IMPORTADOR
 
             try
             {
-                using (StreamReader sr = new StreamReader(fileName, Encoding.Unicode, true))
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
                 {
                     _watch.Start();
                     string line;

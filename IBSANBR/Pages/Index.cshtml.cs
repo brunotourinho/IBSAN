@@ -49,11 +49,11 @@ namespace IBSANBR
         {
             Municipios = await _infoRepository.ListarMunicipios();
             PopulacaoAtendimento = await _infoRepository.PopulacaoAtendimento(CodigoMunicipio);
-            //ProducaoConsumo = await _infoRepository.ConsumoProducao(CodigoMunicipio);
-            //PerdasAgua = await _infoRepository.PerdasAgua(CodigoMunicipio);
-            //ReceitaDespesaDesempenho = await _infoRepository.ReceitaDespesaDesempenho(CodigoMunicipio);
-            //ParticipacaoDespesas = await _infoRepository.ParticipacaoDespesas(CodigoMunicipio);
-            //Estatisticas = await _infoRepository.Estatisticas(CodigoMunicipio);
+            ProducaoConsumo = await _infoRepository.ConsumoProducao(CodigoMunicipio);
+            PerdasAgua = await _infoRepository.PerdasAgua(CodigoMunicipio);
+            ReceitaDespesaDesempenho = await _infoRepository.ReceitaDespesaDesempenho(CodigoMunicipio);
+            ParticipacaoDespesas = await _infoRepository.ParticipacaoDespesas(CodigoMunicipio);
+            Estatisticas = await _infoRepository.Estatisticas(CodigoMunicipio);
             return Page();
         }
     }

@@ -30,17 +30,17 @@
         {
             <div class="row">
                 <div class="column">
-                    <!--@@if (Model.Estatisticas != null)
+                    @if (Model.Estatisticas != null)
                     {
                         foreach(var p in Model.Estatisticas.Prestadores)
                         {
-                            <h4>@@p</h4>
+                            <h4>@p</h4>
                         }
                         <div class="ui blue center aligned segment">
                             <div class="ui mini stackable statistics" style="justify-content: center;">
                                 <div class="ui statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.AG003
+                                        @Model.Estatisticas.AG003
                                     </div>
                                     <div class="label">
                                         Número de Economias Ativas<br />Água
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.ES003
+                                        @Model.Estatisticas.ES003
                                     </div>
                                     <div class="label">
                                         Número de Economias Ativas<br />Esgoto
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.AG005
+                                        @Model.Estatisticas.AG005
                                     </div>
                                     <div class="label">
                                         Extensão da Rede<br />Água
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.AG005
+                                        @Model.Estatisticas.AG005
                                     </div>
                                     <div class="label">
                                         Extensão da Rede<br />Água
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.ES004
+                                        @Model.Estatisticas.ES004
                                     </div>
                                     <div class="label">
                                         Extensão da Rede<br />Esgoto
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.IN055
+                                        @Model.Estatisticas.IN055
                                     </div>
                                     <div class="label">
                                         Atendimento de Água
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.IN056
+                                        @Model.Estatisticas.IN056
                                     </div>
                                     <div class="label">
                                         Atendimento de Esgoto
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.IN049
+                                        @Model.Estatisticas.IN049
                                     </div>
                                     <div class="label">
                                         Perdas na Distribuição<br />Água
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.IN012
+                                        @Model.Estatisticas.IN012
                                     </div>
                                     <div class="label">
                                         Desempenho Financeiro
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="ui small statistic">
                                     <div class="value">
-                                        @@Model.Estatisticas.IN043
+                                        @Model.Estatisticas.IN043
                                     </div>
                                     <div class="label">
                                         Consumo Residencial
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    }-->
+                    }
                 </div>
             </div>
         }
@@ -265,7 +265,7 @@
         volumeFaturado.data = []
 
         $(result_c2).each(function (index) {
-            cats.push(result_c1[index].Competencia);
+            cats.push(result_c1[index].Referencia);
 
             volumeProduzido.data.push(result_c2[index].AG006 + result_c2[index].AG018);
 
@@ -326,7 +326,7 @@
         perdasLineares.data = []
 
         $(result_c3).each(function (index) {
-            cats.push(result_c3[index].Competencia);
+            cats.push(result_c3[index].Referencia);
 
             perdasDistribuicao.data.push(result_c3[index].IN049);
             perdasLineares.data.push(result_c3[index].IN050);
@@ -391,7 +391,7 @@
                         despesaTotal.type = 'column';
 
                         $(result_c4).each(function (index) {
-                            cats.push(result_c4[index].Competencia);
+                            cats.push(result_c4[index].Referencia);
 
                             receitaTotal.data.push(result_c4[index].IN004);
                             despesaTotal.data.push(result_c4[index].IN003);
