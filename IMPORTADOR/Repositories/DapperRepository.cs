@@ -161,21 +161,24 @@ namespace IMPORTADOR.Repositories
 
         public async Task INSERT_IBSANBR_INF_GE(List<IBSANBR_INF_GE> lista)
         {
+            var retList = lista;
             try
             {
-                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                //using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
                 using (IDbConnection db = Connection)
                 {
                     for (var i = 0; i < lista.Count; i++)
                     {
                         await db.InsertAsync<IBSANBR_INF_GE>(lista[i]);
+                        retList.Remove(lista[i]);
                     }
-                    scope.Complete();
+                    //scope.Complete();
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                await INSERT_IBSANBR_INF_GE(retList);
             }
         }
 
