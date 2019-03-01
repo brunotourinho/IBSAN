@@ -7,7 +7,7 @@ namespace IBSANBR.Models
 {
     public class ProducaoConsumo
     {
-        public string Competencia { get; set; }
+        public string Referencia { get; set; }
         public decimal AG006 { get; set; }
         public decimal AG010 { get; set; }
         public decimal AG011 { get; set; }
