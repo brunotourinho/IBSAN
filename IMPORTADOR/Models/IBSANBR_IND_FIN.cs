@@ -53,6 +53,7 @@ namespace IMPORTADOR.Models
         public decimal IN054 { get; set; }
         public decimal IN060 { get; set; }
         public decimal IN101 { get; set; }
+        public decimal IN102 { get; set; }
 
 
 

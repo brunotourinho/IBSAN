@@ -56,7 +56,8 @@
             "INF_ES",
             "INF_FN",
             "INF_GE",
-            "INF_QD"});
+            "INF_QD",
+            "PRESTADORES"});
             this.ddlTipoArquivo.Location = new System.Drawing.Point(12, 136);
             this.ddlTipoArquivo.Name = "ddlTipoArquivo";
             this.ddlTipoArquivo.Size = new System.Drawing.Size(304, 21);

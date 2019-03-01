@@ -81,6 +81,7 @@
     <Compile Include="Models\IBSANBR_IND_FIN.cs" />
     <Compile Include="Models\IBSANBR_IND_ES.cs" />
     <Compile Include="Models\IBSANBR_IND_AG.cs" />
+    <Compile Include="Models\Prestadores.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DapperRepository.cs" />

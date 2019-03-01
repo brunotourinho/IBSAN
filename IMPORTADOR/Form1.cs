@@ -67,6 +67,9 @@ namespace IMPORTADOR
                     case "INF_QD":
                         await IMPORTAR_INF_QD(txtFileName.Text);
                         break;
+                    case "PRESTADORES":
+                        await IMPORTAR_PRESTADORES(txtFileName.Text);
+                        break;
                 }
 
                 //->
@@ -297,7 +300,8 @@ namespace IMPORTADOR
                             IN048 = ToDecimal(fragmentos[37]),
                             IN054 = ToDecimal(fragmentos[38]),
                             IN060 = ToDecimal(fragmentos[39]),
-                            IN101 = ToDecimal(fragmentos[40])
+                            IN101 = ToDecimal(fragmentos[40]),
+                            IN102 = ToDecimal(fragmentos[41])
                         });
                         lineCount++;
                     }
@@ -756,6 +760,58 @@ namespace IMPORTADOR
                 try
                 {
                     await _repoDapper.INSERT_IBSANBR_INF_QD(cs);
+                    _watch.Stop();
+                    MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _watch.Stop();
+                    MessageBox.Show($"Erro ao gravar no Banco de Dados: { ex }\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _watch.Stop();
+                MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //-> Prestadores
+
+        private async Task IMPORTAR_PRESTADORES(string fileName)
+        {
+            var cs = new List<Prestadores>();
+            int lineCount = 0;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
+                {
+                    _watch.Start();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var fragmentos = line.Split(';').ToList();
+
+                        cs.Add(new Prestadores()
+                        {
+                            Referencia = fragmentos[0].Trim(),
+                            CodigoMunicipio = fragmentos[1].Trim(),
+                            CodigoPrestador = fragmentos[2].Trim(),
+                            Prestador = fragmentos[3].Trim(),
+                            Sigla = fragmentos[4].Trim(),
+                            Abrangencia = fragmentos[5].Trim(),
+                            TipoServico = fragmentos[6].Trim(),
+                            Natureza = fragmentos[7],
+                          
+                        });
+                        lineCount++;
+                    }
+                }
+
+                try
+                {
+                    await _repoDapper.INSERT_PRESTADORES(cs);
                     _watch.Stop();
                     MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

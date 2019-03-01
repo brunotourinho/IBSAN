@@ -198,5 +198,24 @@ namespace IMPORTADOR.Repositories
                 throw ex;
             }
         }
+        public async Task INSERT_PRESTADORES(List<Prestadores> lista)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                using (IDbConnection db = Connection)
+                {
+                    for (var i = 0; i < lista.Count; i++)
+                    {
+                        await db.InsertAsync<Prestadores>(lista[i]);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
