@@ -70,6 +70,20 @@ namespace IMPORTADOR
                     case "PRESTADORES":
                         await IMPORTAR_PRESTADORES(txtFileName.Text);
                         break;
+                    case "IND_AE_AG":
+                        await IMPORTAR_IND_AE_AG(txtFileName.Text);
+                        break;
+                    case "IND_AE_ES":
+                        await IMPORTAR_IND_AE_ES(txtFileName.Text);
+                        break;
+
+                    case "INF_AE_AG":
+                        await IMPORTAR_INF_AE_AG(txtFileName.Text);
+                        break;
+
+                    case "INF_AE_ES":
+                        await IMPORTAR_INF_AE_ES(txtFileName.Text);
+                        break;
                 }
 
                 //->
@@ -184,6 +198,70 @@ namespace IMPORTADOR
                 MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private async Task IMPORTAR_IND_AE_AG(string fileName)
+        {
+            var cs = new List<IBSANBR_IND_AE_AG>();
+            int lineCount = 0;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
+                {
+                    _watch.Start();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var fragmentos = line.Split(';').ToList();
+
+                        cs.Add(new IBSANBR_IND_AE_AG()
+                        {
+                            CodigoMunicipio = fragmentos[0].Trim(),
+                            Referencia = fragmentos[3].Trim(),
+                            IN001 = ToDecimal(fragmentos[6]),
+                            IN009 = ToDecimal(fragmentos[7]),
+                            IN010 = ToDecimal(fragmentos[8]),
+                            IN011 = ToDecimal(fragmentos[9]),
+                            IN013 = ToDecimal(fragmentos[10]),
+                            IN014 = ToDecimal(fragmentos[11]),
+                            IN017 = ToDecimal(fragmentos[12]),
+                            IN020 = ToDecimal(fragmentos[13]),
+                            IN022 = ToDecimal(fragmentos[14]),
+                            IN023 = ToDecimal(fragmentos[15]),
+                            IN025 = ToDecimal(fragmentos[16]),
+                            IN028 = ToDecimal(fragmentos[17]),
+                            IN043 = ToDecimal(fragmentos[18]),
+                            IN044 = ToDecimal(fragmentos[19]),
+                            IN049 = ToDecimal(fragmentos[20]),
+                            IN050 = ToDecimal(fragmentos[21]),
+                            IN051 = ToDecimal(fragmentos[22]),
+                            IN052 = ToDecimal(fragmentos[23]),
+                            IN053 = ToDecimal(fragmentos[24]),
+                            IN055 = ToDecimal(fragmentos[25]),
+                            IN057 = ToDecimal(fragmentos[26]),
+                            IN058 = ToDecimal(fragmentos[27])
+                        });
+                        lineCount++;
+                    }
+                }
+
+                try
+                {
+                    await _repoDapper.INSERT_IBSANBR_IND_AE_AG(cs);
+                    _watch.Stop();
+                    MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _watch.Stop();
+                    MessageBox.Show($"Erro ao gravar no Banco de Dados: { ex }\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _watch.Stop();
+                MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private async Task IMPORTAR_IND_ES(string fileName)
         {
@@ -227,6 +305,56 @@ namespace IMPORTADOR
                 try
                 {
                     await _repoDapper.INSERT_IBSANBR_IND_ES(cs);
+                    _watch.Stop();
+                    MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _watch.Stop();
+                    MessageBox.Show($"Erro ao gravar no Banco de Dados: { ex }\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _watch.Stop();
+                MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async Task IMPORTAR_IND_AE_ES(string fileName)
+        {
+            var cs = new List<IBSANBR_IND_AE_ES>();
+            int lineCount = 0;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
+                {
+                    _watch.Start();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var fragmentos = line.Split(';').ToList();
+
+                        cs.Add(new IBSANBR_IND_AE_ES()
+                        {
+                            CodigoMunicipio = fragmentos[0].Trim(),                           
+                            Referencia = fragmentos[3].Trim(),
+                            IN015 = ToDecimal(fragmentos[6]),
+                            IN016 = ToDecimal(fragmentos[7]),
+                            IN021 = ToDecimal(fragmentos[8]),
+                            IN024 = ToDecimal(fragmentos[9]),
+                            IN046 = ToDecimal(fragmentos[10]),
+                            IN047 = ToDecimal(fragmentos[11]),
+                            IN056 = ToDecimal(fragmentos[12]),
+                            IN059 = ToDecimal(fragmentos[13]),
+                        });
+                        lineCount++;
+                    }
+                }
+
+                try
+                {
+                    await _repoDapper.INSERT_IBSANBR_IND_AE_ES(cs);
                     _watch.Stop();
                     MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -466,6 +594,72 @@ namespace IMPORTADOR
                 MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private async Task IMPORTAR_INF_AE_AG(string fileName)
+        {
+            var cs = new List<IBSANBR_INF_AE_AG>();
+            int lineCount = 0;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
+                {
+                    _watch.Start();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var fragmentos = line.Split(';').ToList();
+
+                        cs.Add(new IBSANBR_INF_AE_AG()
+                        {
+                            CodigoMunicipio = fragmentos[0].Trim(),
+                            Referencia = fragmentos[3].Trim(),
+                            AG001 = ToDecimal(fragmentos[6]),
+                            AG002 = ToDecimal(fragmentos[7]),
+                            AG003 = ToDecimal(fragmentos[8]),
+                            AG004 = ToDecimal(fragmentos[9]),
+                            AG005 = ToDecimal(fragmentos[10]),
+                            AG006 = ToDecimal(fragmentos[11]),
+                            AG007 = ToDecimal(fragmentos[12]),
+                            AG008 = ToDecimal(fragmentos[13]),
+                            AG010 = ToDecimal(fragmentos[14]),
+                            AG011 = ToDecimal(fragmentos[15]),
+                            AG012 = ToDecimal(fragmentos[16]),
+                            AG013 = ToDecimal(fragmentos[17]),
+                            AG014 = ToDecimal(fragmentos[18]),
+                            AG015 = ToDecimal(fragmentos[19]),
+                            AG017 = ToDecimal(fragmentos[20]),
+                            AG018 = ToDecimal(fragmentos[21]),
+                            AG019 = ToDecimal(fragmentos[22]),
+                            AG020 = ToDecimal(fragmentos[23]),
+                            AG021 = ToDecimal(fragmentos[24]),
+                            AG022 = ToDecimal(fragmentos[25]),
+                            AG024 = ToDecimal(fragmentos[26]),
+                            AG026 = ToDecimal(fragmentos[27]),
+                            AG027 = ToDecimal(fragmentos[28]),
+                            AG028 = ToDecimal(fragmentos[29]),
+                        });
+                        lineCount++;
+                    }
+                }
+
+                try
+                {
+                    await _repoDapper.INSERT_IBSANBR_INF_AE_AG(cs);
+                    _watch.Stop();
+                    MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _watch.Stop();
+                    MessageBox.Show($"Erro ao gravar no Banco de Dados: { ex }\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _watch.Stop();
+                MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private async Task IMPORTAR_INF_ES(string fileName)
         {
@@ -517,6 +711,63 @@ namespace IMPORTADOR
                 try
                 {
                     await _repoDapper.INSERT_IBSANBR_INF_ES(cs);
+                    _watch.Stop();
+                    MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _watch.Stop();
+                    MessageBox.Show($"Erro ao gravar no Banco de Dados: { ex }\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _watch.Stop();
+                MessageBox.Show($"Erro na linha {lineCount + 1}\n{ex.Message}\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async Task IMPORTAR_INF_AE_ES(string fileName)
+        {
+            var cs = new List<IBSANBR_INF_AE_ES>();
+            int lineCount = 0;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fileName, Encoding.UTF8, true))
+                {
+                    _watch.Start();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var fragmentos = line.Split(';').ToList();
+
+                        cs.Add(new IBSANBR_INF_AE_ES()
+                        {
+                            CodigoMunicipio = fragmentos[0].Trim(),
+                            Referencia = fragmentos[3].Trim(),
+                            ES001 = ToDecimal(fragmentos[6]),
+                            ES002 = ToDecimal(fragmentos[7]),
+                            ES003 = ToDecimal(fragmentos[8]),
+                            ES004 = ToDecimal(fragmentos[9]),
+                            ES005 = ToDecimal(fragmentos[10]),
+                            ES006 = ToDecimal(fragmentos[11]),
+                            ES007 = ToDecimal(fragmentos[12]),
+                            ES008 = ToDecimal(fragmentos[13]),
+                            ES009 = ToDecimal(fragmentos[14]),
+                            ES012 = ToDecimal(fragmentos[15]),
+                            ES013 = ToDecimal(fragmentos[16]),
+                            ES014 = ToDecimal(fragmentos[17]),
+                            ES015 = ToDecimal(fragmentos[18]),
+                            ES026 = ToDecimal(fragmentos[19]),
+                            ES028 = ToDecimal(fragmentos[20])
+                        });
+                        lineCount++;
+                    }
+                }
+
+                try
+                {
+                    await _repoDapper.INSERT_IBSANBR_INF_AE_ES(cs);
                     _watch.Stop();
                     MessageBox.Show($"Arquivo importado com sucesso. { lineCount } registros importados\nTempo de execução: {_watch.Elapsed.ToString(@"hh\:mm\:ss")}", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

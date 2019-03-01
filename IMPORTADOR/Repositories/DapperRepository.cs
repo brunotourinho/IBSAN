@@ -39,6 +39,26 @@ namespace IMPORTADOR.Repositories
             }
         }
 
+        public async Task INSERT_IBSANBR_IND_AE_AG(List<IBSANBR_IND_AE_AG> lista)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                using (IDbConnection db = Connection)
+                {
+                    for (var i = 0; i < lista.Count; i++)
+                    {
+                        await db.InsertAsync<IBSANBR_IND_AE_AG>(lista[i]);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task INSERT_IBSANBR_IND_ES(List<IBSANBR_IND_ES> lista)
         {
             try
@@ -49,6 +69,25 @@ namespace IMPORTADOR.Repositories
                     for (var i = 0; i < lista.Count; i++)
                     {
                         await db.InsertAsync<IBSANBR_IND_ES>(lista[i]);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task INSERT_IBSANBR_IND_AE_ES(List<IBSANBR_IND_AE_ES> lista)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                using (IDbConnection db = Connection)
+                {
+                    for (var i = 0; i < lista.Count; i++)
+                    {
+                        await db.InsertAsync<IBSANBR_IND_AE_ES>(lista[i]);
                     }
                     scope.Complete();
                 }
@@ -119,6 +158,26 @@ namespace IMPORTADOR.Repositories
             }
         }
 
+        public async Task INSERT_IBSANBR_INF_AE_AG(List<IBSANBR_INF_AE_AG> lista)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                using (IDbConnection db = Connection)
+                {
+                    for (var i = 0; i < lista.Count; i++)
+                    {
+                        await db.InsertAsync<IBSANBR_INF_AE_AG>(lista[i]);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task INSERT_IBSANBR_INF_ES(List<IBSANBR_INF_ES> lista)
         {
             try
@@ -129,6 +188,26 @@ namespace IMPORTADOR.Repositories
                     for (var i = 0; i < lista.Count; i++)
                     {
                         await db.InsertAsync<IBSANBR_INF_ES>(lista[i]);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task INSERT_IBSANBR_INF_AE_ES(List<IBSANBR_INF_AE_ES> lista)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions { Timeout = new TimeSpan(2, 0, 0) }, TransactionScopeAsyncFlowOption.Enabled))
+                using (IDbConnection db = Connection)
+                {
+                    for (var i = 0; i < lista.Count; i++)
+                    {
+                        await db.InsertAsync<IBSANBR_INF_AE_ES>(lista[i]);
                     }
                     scope.Complete();
                 }
@@ -201,6 +280,7 @@ namespace IMPORTADOR.Repositories
                 throw ex;
             }
         }
+
         public async Task INSERT_PRESTADORES(List<Prestadores> lista)
         {
             try

@@ -72,6 +72,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\IBSANBR_IND_AE_AG.cs" />
+    <Compile Include="Models\IBSANBR_IND_AE_ES.cs" />
+    <Compile Include="Models\IBSANBR_INF_AE_AG.cs" />
+    <Compile Include="Models\IBSANBR_INF_AE_ES.cs" />
     <Compile Include="Models\IBSANBR_INF_QD.cs" />
     <Compile Include="Models\IBSANBR_INF_GE.cs" />
     <Compile Include="Models\IBSANBR_INF_FN.cs" />
