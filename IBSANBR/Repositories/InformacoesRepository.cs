@@ -78,7 +78,11 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<PerdasAgua>(@"SET SQL_BIG_SELECTS = 1; SELECT ibsanbr_ind_ag.Referencia, ibsanbr_ind_ag.IN049, ibsanbr_ind_ag.IN050 FROM ibsanbr_ind_ag WHERE ibsanbr_ind_ag.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_ag.Referencia in (2012, 2013, 2014, 2015, 2016) GROUP BY ibsanbr_ind_ag.Referencia ORDER BY ibsanbr_ind_ag.Referencia",
+                var result = await db.QueryAsync<PerdasAgua>(@"SET SQL_BIG_SELECTS = 1; 
+                SELECT ibsanbr_ind_ae_ag.Referencia, ibsanbr_ind_ae_ag.IN049, ibsanbr_ind_ae_ag.IN050 
+                FROM ibsanbr_ind_ae_ag WHERE ibsanbr_ind_ae_ag.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_ae_ag.Referencia in (2012, 2013, 2014, 2015, 2016,2017) 
+                GROUP BY ibsanbr_ind_ae_ag.Referencia 
+                ORDER BY ibsanbr_ind_ae_ag.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
