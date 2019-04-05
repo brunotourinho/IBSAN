@@ -92,7 +92,7 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var result = await db.QueryAsync<ReceitaDespesaDesempenho>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fin.Referencia, ibsanbr_ind_fin.IN003, ibsanbr_ind_fin.IN004, ibsanbr_ind_fin.IN012 FROM ibsanbr_ind_fin WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia in (2012,2013,2014,2015,2016,2017) ORDER BY ibsanbr_ind_fin.Referencia",
+                var result = await db.QueryAsync<ReceitaDespesaDesempenho>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fn.Referencia, ibsanbr_ind_fn.IN003, ibsanbr_ind_fn.IN004, ibsanbr_ind_fn.IN012 FROM ibsanbr_ind_fn WHERE ibsanbr_ind_fn.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fn.Referencia in (2012,2013,2014,2015,2016,2017) ORDER BY ibsanbr_ind_fn.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
                 return result.ToList();
             }
@@ -102,7 +102,7 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                return await db.QuerySingleOrDefaultAsync<ParticipacaoDespesas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fin.Referencia, ibsanbr_ind_fin.IN036, ibsanbr_ind_fin.IN037, ibsanbr_ind_fin.IN038, ibsanbr_ind_fin.IN039 FROM ibsanbr_ind_fin WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia = (SELECT MAX(ibsanbr_ind_fin.Referencia) FROM ibsanbr_ind_fin) GROUP BY ibsanbr_ind_fin.Referencia ORDER BY ibsanbr_ind_fin.Referencia",
+                return await db.QuerySingleOrDefaultAsync<ParticipacaoDespesas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_ind_fn.Referencia, ibsanbr_ind_fn.IN036, ibsanbr_ind_fn.IN037, ibsanbr_ind_fn.IN038, ibsanbr_ind_fn.IN039 FROM ibsanbr_ind_fn WHERE ibsanbr_ind_fn.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fn.Referencia = (SELECT MAX(ibsanbr_ind_fn.Referencia) FROM ibsanbr_ind_fn) GROUP BY ibsanbr_ind_fn.Referencia ORDER BY ibsanbr_ind_fn.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
             }
         }
@@ -111,10 +111,10 @@ namespace IBSANBR.Repositories
         {
             using (IDbConnection db = Connection)
             {
-                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_inf_ag.AG003, ibsanbr_inf_es.ES003, ibsanbr_inf_ag.AG005, ibsanbr_inf_es.ES004, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056, ibsanbr_ind_ag.IN049, ibsanbr_ind_fin.IN012, ibsanbr_ind_ag.IN043 FROM ibsanbr_ind_fin INNER JOIN ibsanbr_ind_ag ON ibsanbr_ind_ag.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_ind_es ON ibsanbr_ind_es.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_inf_ag ON ibsanbr_inf_ag.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio INNER JOIN ibsanbr_inf_es ON ibsanbr_inf_es.CodigoMunicipio = ibsanbr_ind_fin.CodigoMunicipio WHERE ibsanbr_ind_fin.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fin.Referencia = (SELECT MAX(ibsanbr_ind_fin.Referencia) FROM ibsanbr_ind_fin) GROUP BY ibsanbr_ind_fin.Referencia ORDER BY ibsanbr_ind_fin.Referencia",
+                var resultE = await db.QuerySingleOrDefaultAsync<Estatisticas>(@"SET SQL_BIG_SELECTS=1; SELECT ibsanbr_inf_ag.AG003, ibsanbr_inf_es.ES003, ibsanbr_inf_ag.AG005, ibsanbr_inf_es.ES004, ibsanbr_ind_ag.IN055, ibsanbr_ind_es.IN056, ibsanbr_ind_ag.IN049, ibsanbr_ind_fn.IN012, ibsanbr_ind_ag.IN043 FROM ibsanbr_ind_fn INNER JOIN ibsanbr_ind_ag ON ibsanbr_ind_ag.CodigoMunicipio = ibsanbr_ind_fn.CodigoMunicipio INNER JOIN ibsanbr_ind_es ON ibsanbr_ind_es.CodigoMunicipio = ibsanbr_ind_fn.CodigoMunicipio INNER JOIN ibsanbr_inf_ag ON ibsanbr_inf_ag.CodigoMunicipio = ibsanbr_ind_fn.CodigoMunicipio INNER JOIN ibsanbr_inf_es ON ibsanbr_inf_es.CodigoMunicipio = ibsanbr_ind_fn.CodigoMunicipio WHERE ibsanbr_ind_fn.CodigoMunicipio = ?CodigoMunicipio AND ibsanbr_ind_fn.Referencia = (SELECT MAX(ibsanbr_ind_fn.Referencia) FROM ibsanbr_ind_fn WHERE ibsanbr_ind_fn.CodigoMunicipio = ?CodigoMunicipio) GROUP BY ibsanbr_ind_fn.Referencia ORDER BY ibsanbr_ind_fn.Referencia",
                     new { CodigoMunicipio = codigoMunicipio });
 
-                var resultP = await db.QueryAsync<string>(@"SELECT prestadores.Prestador FROM prestadores WHERE prestadores.CodigoMunicipio = ?CodigoMunicipio AND prestadores.Referencia = (SELECT MAX(prestadores.Referencia) FROM prestadores);",
+                var resultP = await db.QueryAsync<string>(@"SET SQL_BIG_SELECTS=1; SELECT prestadores.Prestador FROM prestadores WHERE prestadores.CodigoMunicipio = ?CodigoMunicipio AND prestadores.Referencia = (SELECT MAX(prestadores.Referencia) FROM prestadores WHERE prestadores.CodigoMunicipio = ?CodigoMunicipio);",
                     new { CodigoMunicipio = codigoMunicipio });
 
                 var e = new Estatisticas()
