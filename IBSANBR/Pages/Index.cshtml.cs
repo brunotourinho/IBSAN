@@ -34,7 +34,6 @@ namespace IBSANBR
         [BindProperty]
         public Estatisticas Estatisticas { get; set; }
 
-
         public IndexModel(InformacoesRepository infoRepository)
         {
             _infoRepository = infoRepository;
@@ -42,13 +41,13 @@ namespace IBSANBR
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Municipios = await _infoRepository.Listar();
+            Municipios = await _infoRepository.ListarMunicipios();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Municipios = await _infoRepository.Listar();
+            Municipios = await _infoRepository.ListarMunicipios();
             PopulacaoAtendimento = await _infoRepository.PopulacaoAtendimento(CodigoMunicipio);
             ProducaoConsumo = await _infoRepository.ConsumoProducao(CodigoMunicipio);
             PerdasAgua = await _infoRepository.PerdasAgua(CodigoMunicipio);

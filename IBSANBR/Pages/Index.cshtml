@@ -124,49 +124,48 @@
                 </div>
             </div>
         }
-            <div class="ui two column row">
-                @if (Model.PopulacaoAtendimento != null)
-                {
-                    <div class="ui column">
-                        <div id="chartOneContainer" class="ui blue segment"></div>
-                    </div>
-                }
-                @if (Model.ProducaoConsumo != null)
-                {
-                    <div class="ui column">
-                        <div id="chartTwoContainer" class="ui blue segment"></div>
-                    </div>
-
-                }
-                
-            </div>
-            <div class="ui two column row">
-                @if (Model.PerdasAgua != null)
-                {
-                    <div class="ui column">
-                        <div id="chartThreeContainer" class="ui blue segment"></div>
-                    </div>
-
-                }
+        <div class="ui two column row">
+            @if (Model.PopulacaoAtendimento != null)
+            {
                 <div class="ui column">
-                    @if (Model.ReceitaDespesaDesempenho != null)
-                    {
-                        <div class="ui column">
-                            <div id="chartFourContainer" class="ui blue segment"></div>
-                        </div>
-
-                    }
+                    <div id="chartOneContainer" class="ui blue segment"></div>
                 </div>
-            </div>
-            <div class="ui two column row">
-                @if (Model.ParticipacaoDespesas != null)
+            }
+            @if (Model.ProducaoConsumo != null)
+            {
+                <div class="ui column">
+                    <div id="chartTwoContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+        </div>
+        <div class="ui two column row">
+            @if (Model.PerdasAgua != null)
+            {
+                <div class="ui column">
+                    <div id="chartThreeContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+            <div class="ui column">
+                @if (Model.ReceitaDespesaDesempenho != null)
                 {
                     <div class="ui column">
-                        <div id="chartFiveContainer" class="ui blue segment"></div>
+                        <div id="chartFourContainer" class="ui blue segment"></div>
                     </div>
 
                 }
-            </div>  
+            </div>
+        </div>
+        <div class="ui two column row">
+            @if (Model.ParticipacaoDespesas != null)
+            {
+                <div class="ui column">
+                    <div id="chartFiveContainer" class="ui blue segment"></div>
+                </div>
+
+            }
+        </div>
     </div>
 </div>
 @section scripts {
@@ -198,9 +197,9 @@
         atendimentoEsgoto.yAxis = 1,
 
         $(result_c1).each(function (index) {
-            cats.push(result_c1[index].Competencia);
+            cats.push(result_c1[index].Referencia);
 
-            populacao.data.push(result_c1[index].GE12A);
+            populacao.data.push(result_c1[index].POP_TOT);
             atendimentoTotal.data.push(result_c1[index].IN055);
             atendimentoEsgoto.data.push(result_c1[index].IN056);
         });
@@ -266,7 +265,7 @@
         volumeFaturado.data = []
 
         $(result_c2).each(function (index) {
-            cats.push(result_c1[index].Competencia);
+            cats.push(result_c1[index].Referencia);
 
             volumeProduzido.data.push(result_c2[index].AG006 + result_c2[index].AG018);
 
@@ -327,7 +326,7 @@
         perdasLineares.data = []
 
         $(result_c3).each(function (index) {
-            cats.push(result_c3[index].Competencia);
+            cats.push(result_c3[index].Referencia);
 
             perdasDistribuicao.data.push(result_c3[index].IN049);
             perdasLineares.data.push(result_c3[index].IN050);
@@ -392,7 +391,7 @@
                         despesaTotal.type = 'column';
 
                         $(result_c4).each(function (index) {
-                            cats.push(result_c4[index].Competencia);
+                            cats.push(result_c4[index].Referencia);
 
                             receitaTotal.data.push(result_c4[index].IN004);
                             despesaTotal.data.push(result_c4[index].IN003);
@@ -516,7 +515,6 @@
                     ]
                 }]
             });
-
     </script>
 
 }

@@ -2,7 +2,7 @@
 {
     public class PerdasAgua
     {
-        public string Competencia { get; set; }
+        public string Referencia { get; set; }
         public decimal IN049 { get; set; }
         public decimal IN050 { get; set; }
     }

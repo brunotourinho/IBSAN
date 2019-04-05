@@ -1,0 +1,107 @@
+﻿@page
+@model IBSANBR.Pages.Benchmark.BenchmarkModel
+@using Newtonsoft.Json
+<partial name="_Header" />
+<div style="background-color:#f2f2f2;min-height:100%; margin: 16px 0 0 0;">
+    <div class="ui stackable grid container">
+        <div class="row">
+            <div class="column">
+                <h2>Pesquisa</h2>
+                <form method="get" class="ui form tiny principal-form">
+                    <div class="fields">
+                        <div class="four wide field">
+                            <select asp-for="CodigoMunicipio" class="ui search selection dropdown">
+                                <option value="">Selecione</option>
+                                @foreach (var m in Model.Municipios)
+                                {
+                                    <option value="@m.CodigoMunicipio">@m.Nome-@m.UF</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="four wide field">
+                            <select asp-for="CompetenciaSelecionados" class="ui multiple search selection dropdown">
+                                <option value="">Selecione</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                            </select>
+                        </div>
+                        <div class="four wide field">
+                            <select asp-for="ElementoSelecionados" class="ui multiple search selection dropdown">
+                                <option value="">Selecione</option>
+                                @foreach (var m in Model.Elementos)
+                                {
+                                    <option value="@m.CodigoElemento">@m.Descricao</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="two wide field">
+                            <input type="submit" class="ui tiny button" value="Pesquisar" />
+                        </div>
+                    </div>
+                    <div class="ui error message"></div>
+                </form>
+                <div id="charts"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        var result = @Html.Raw(@JsonConvert.SerializeObject(Model.Benchmark))
+
+        var cats = result.Categorias;
+
+        for(var e = 0; e < result.Elementos.length; e++)
+        {
+            $('#charts').append('<div class="ui blue segment"><h4 class="ui header">' + result.Elementos[e].CodigoElemento + ' - ' + result.Elementos[e].Descricao + '</h4><div id="' + 'chartContainer' + e + '"></div></div>');
+
+            //var serieGrafico = result.Series.filter(function(object) { return (object.name === result.Elementos[e].CodigoElemento)  })
+
+            var serieGrafico = result.Series.filter(function(object) { return object.name.startsWith(result.Elementos[e].CodigoElemento)  })
+
+            Highcharts.chart('chartContainer' + e, {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: cats
+                },
+                yAxis: [
+                    {
+                        title: { text: '' }
+                    }],
+                tooltip: {
+                    formatter: function () {
+                        return '' +
+                            this.x + ': ' + Highcharts.numberFormat(this.y, 2, ',', '.') +
+                            (this.series.name.indexOf('%') > 0 ? '%' : '');
+                        //'Coverage with Water Service, %' ? '%' : '');
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: false
+                        },
+                        enableMouseTracking: true
+                    }
+                },
+                series: serieGrafico
+            });
+        }
+
+
+    </script>
+}
+
