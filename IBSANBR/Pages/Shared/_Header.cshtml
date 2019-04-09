@@ -25,10 +25,30 @@
                     <span style="color:#444; font-size: 0.8em;">Iniciativa de Benchmarking de Saneamento - Brasil</span>
                 </h2>
             </div>
+            @functions
+            {
+
+            }
             <div class="ui secondary pointing menu">
-                <a class="active item">
-                    Início
-                </a>
+
+                @if (Url.ActionContext.HttpContext.Request.Path.Value.ToString().Equals("/"))
+                {
+                    <a class="item active" asp-page="/Index"> Início </a>
+                }
+                else
+                {
+                    <a class="item" asp-page="/Index"> Início </a>
+                }
+
+                @if (Url.ActionContext.HttpContext.Request.Path.Value.ToString().Contains("/Conceitos"))
+                {
+                    <a class="item active" asp-page="Conceitos/Conceitos"> Conceitos </a>
+                }
+                else
+                {
+                    <a class="item" asp-page="Conceitos/Conceitos"> Conceitos </a>
+                }
+
                 <a class="item">
                     Sobre
                 </a>
